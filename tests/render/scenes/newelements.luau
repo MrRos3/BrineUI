@@ -1,0 +1,12 @@
+-- themes: Liquid
+local Window = Brine:CreateWindow({ Title = "Brine", Theme = THEME, Size = UDim2.fromOffset(700, 520), NewElements = true, AutoScale = false, Topbar = { Height = 44, ButtonsType = "Default" } })
+run(0.1)
+local T = Window:Tab({ Title = "Session", Icon = "layers", Border = true })
+T:Toggle({ Title = "Notifications", Value = true })
+T:Slider({ Title = "Volume", Value = { Min = 0, Max = 100, Default = 30 } })
+T:Dropdown({ Title = "Profile", Values = { "A", "B" }, Value = "A", Callback = function() end })
+T:Keybind({ Title = "Shortcut", Value = "RightShift" })
+T:Button({ Title = "Go" })
+T:Select()
+run(2)
+emit()

@@ -1,0 +1,867 @@
+{
+  "src/Init.lua": {
+    "methods": [
+      "BrineUI.GenerateGUID(",
+      "BrineUI:AddTheme(LTheme",
+      "BrineUI:CreateWindow(Config",
+      "BrineUI:GetCurrentTheme(",
+      "BrineUI:GetThemes(",
+      "BrineUI:GetTransparency(",
+      "BrineUI:GetWindowSize(",
+      "BrineUI:Gradient(stops, props",
+      "BrineUI:Localization(LocalizationConfig",
+      "BrineUI:Notify(Config",
+      "BrineUI:OnThemeChange(func",
+      "BrineUI:Popup(PopupConfig",
+      "BrineUI:SetFont(FontId",
+      "BrineUI:SetLanguage(Value",
+      "BrineUI:SetNotificationLower(Val",
+      "BrineUI:SetParent(parent",
+      "BrineUI:SetTheme(Value",
+      "BrineUI:ToggleAcrylic(Value"
+    ],
+    "options": [
+      "Config.Acrylic",
+      "Config.Folder",
+      "Config.Holder",
+      "Config.KeySystem",
+      "Config.Theme",
+      "Config.Transparent"
+    ]
+  },
+  "src/components/KeySystem.lua": {
+    "methods": [
+      "KeySystem.new(Config, Filename, func, keyValidator"
+    ],
+    "options": [
+      "Config.Folder",
+      "Config.Icon",
+      "Config.IconThemed",
+      "Config.KeySystem",
+      "Config.Title"
+    ]
+  },
+  "src/components/Notification.lua": {
+    "methods": [
+      "NotModule.SetLower(val",
+      "Notification:Close(",
+      "NotificationModule.Init(Parent",
+      "NotificationModule.New(Config"
+    ],
+    "options": [
+      "Config.Background",
+      "Config.BackgroundImageTransparency",
+      "Config.Buttons",
+      "Config.CanClose",
+      "Config.Content",
+      "Config.Duration",
+      "Config.Holder",
+      "Config.Icon",
+      "Config.IconThemed",
+      "Config.Title"
+    ]
+  },
+  "src/components/popup/Element.lua": {
+    "methods": [
+      "Element.New("
+    ],
+    "options": []
+  },
+  "src/components/popup/Init.lua": {
+    "methods": [
+      "PopupModule.new(PopupConfig, Parent"
+    ],
+    "options": [
+      "PopupConfig.Buttons",
+      "PopupConfig.Content",
+      "PopupConfig.Icon",
+      "PopupConfig.IconThemed",
+      "PopupConfig.Thumbnail",
+      "PopupConfig.Title"
+    ]
+  },
+  "src/components/search/Icons.lua": {
+    "methods": [],
+    "options": []
+  },
+  "src/components/search/Init.lua": {
+    "methods": [
+      "SearchBar.new(TabModule, Parent, OnClose",
+      "SearchBarModule:Close(IsDestroy",
+      "SearchBarModule:Open(",
+      "SearchBarModule:Search(query"
+    ],
+    "options": []
+  },
+  "src/components/ui/Button.lua": {
+    "methods": [
+      "Button.New(Title, Icon, Callback, Variant, Parent, Dialog, FullRounded, Radius"
+    ],
+    "options": []
+  },
+  "src/components/ui/Checkbox.lua": {
+    "methods": [
+      "Checkbox.New(Value, Icon, IconSize, Parent, Callback, Config",
+      "Checkbox:Set(Toggled"
+    ],
+    "options": []
+  },
+  "src/components/ui/Code.lua": {
+    "methods": [
+      "Code.New(Code, Window, Parent, Callback, UIScale",
+      "CodeModule.Destroy(",
+      "CodeModule.Set(code"
+    ],
+    "options": [
+      "ElementConfig.UICorner",
+      "ElementConfig.UIPadding"
+    ]
+  },
+  "src/components/ui/Dropdown.lua": {
+    "methods": [
+      "DropdownMenu.New(Config, Dropdown, Element, Type",
+      "DropdownModule:Close(",
+      "DropdownModule:Display(",
+      "DropdownModule:LockValues(lockedItems",
+      "DropdownModule:Open(",
+      "DropdownModule:Refresh(Values",
+      "DropdownModule:Select(Items"
+    ],
+    "options": []
+  },
+  "src/components/ui/Input.lua": {
+    "methods": [
+      "Input.New(Placeholder, Icon, Parent, Type, Callback, OnChange, Radius, ClearTextOnFocus, RemoveGlass"
+    ],
+    "options": []
+  },
+  "src/components/ui/Label.lua": {
+    "methods": [
+      "Label.New(Text, Icon, Parent, IsPlaceholder, Radius, RemoveGlass"
+    ],
+    "options": []
+  },
+  "src/components/ui/ScrollSlider.lua": {
+    "methods": [
+      "ScrollSlider.New(ScrollingFrame, Parent, Window, Thickness, BrineUI"
+    ],
+    "options": []
+  },
+  "src/components/ui/Tag.lua": {
+    "methods": [
+      "Tag:New(TagConfig, Parent",
+      "TagModule:Destroy(",
+      "TagModule:SetColor(color",
+      "TagModule:SetIcon(icon",
+      "TagModule:SetTitle(text"
+    ],
+    "options": [
+      "TagConfig.Border",
+      "TagConfig.Color",
+      "TagConfig.Icon",
+      "TagConfig.Radius",
+      "TagConfig.Title"
+    ]
+  },
+  "src/components/ui/Toggle.lua": {
+    "methods": [
+      "Toggle.New(Value, Icon, IconSize, Parent, Callback, NewElement, Config",
+      "Toggle:Animate(input, ToggleObj",
+      "Toggle:GetGlassFrame(T: number",
+      "Toggle:Set(Toggled, isCallback, isAnim"
+    ],
+    "options": []
+  },
+  "src/components/ui/Tooltip.lua": {
+    "methods": [
+      "Tooltip.New(Title, Parent, IsArrow, ColorType, Size, IsTextWrap",
+      "TooltipModule:Close(IsDestroy",
+      "TooltipModule:Open("
+    ],
+    "options": []
+  },
+  "src/components/window/Dialog.lua": {
+    "methods": [
+      "Dialog:Close(",
+      "Dialog:Open(",
+      "DialogModule.Create(Key, Type, Window, BrineUI, Parent"
+    ],
+    "options": []
+  },
+  "src/components/window/Element.lua": {
+    "methods": [
+      "Element.UpdateShape(Tab",
+      "Element:Colorize(obj, prop",
+      "Element:Destroy(",
+      "Element:Highlight(",
+      "Element:Lock(newtitle",
+      "Element:SetDesc(text",
+      "Element:SetImage(newImage, newSize",
+      "Element:SetThumbnail(newThumbnail, newSize",
+      "Element:SetTitle(text",
+      "Element:Unlock("
+    ],
+    "options": [
+      "Config.Color",
+      "Config.Desc",
+      "Config.ElementTable",
+      "Config.Hover",
+      "Config.IconThemed",
+      "Config.Image",
+      "Config.ImageSize",
+      "Config.Justify",
+      "Config.Scalable",
+      "Config.Size",
+      "Config.Tags",
+      "Config.TextOffset",
+      "Config.Thumbnail",
+      "Config.ThumbnailSize",
+      "Config.Title",
+      "ElementConfig.UICorner",
+      "ElementConfig.UIPadding"
+    ]
+  },
+  "src/components/window/Init.lua": {
+    "methods": [
+      "Close:Destroy(",
+      "Window.Topbar:Button(ButtonConfig: { Name: string, Icon: string, Callback: any, LayoutOrder: number, IconThemed: boolean, Color: Color3, IconSize: number, }",
+      "Window.User:Disable(",
+      "Window.User:Enable(",
+      "Window.User:SetAnonymous(v",
+      "Window:Close(",
+      "Window:CreateTopbarButton(Name, Icon, Callback, LayoutOrder, IconThemed, Color, IconSize",
+      "Window:Destroy(",
+      "Window:Dialog(DialogConfig",
+      "Window:DisableTopbarButtons(btns",
+      "Window:Divider(",
+      "Window:EditOpenButton(OpenButtonConfig",
+      "Window:GetLocked(",
+      "Window:GetUIScale(v",
+      "Window:GetUnlocked(",
+      "Window:IsResizable(v",
+      "Window:LockAll(",
+      "Window:OnClose(func",
+      "Window:OnDestroy(func",
+      "Window:OnOpen(func",
+      "Window:Open(",
+      "Window:Section(SectionConfig",
+      "Window:SelectTab(Tab",
+      "Window:SetAuthor(text",
+      "Window:SetBackgroundImage(id",
+      "Window:SetBackgroundImageTransparency(v",
+      "Window:SetBackgroundTransparency(v",
+      "Window:SetCurrentConfig(ConfigModule",
+      "Window:SetIconSize(Size",
+      "Window:SetPanelBackground(v",
+      "Window:SetSize(size",
+      "Window:SetTitle(text",
+      "Window:SetToTheCenter(",
+      "Window:SetToggleKey(keycode",
+      "Window:SetUIScale(v",
+      "Window:Tab(TabConfig",
+      "Window:Tag(TagConfig",
+      "Window:Toggle(",
+      "Window:ToggleFullscreen(",
+      "Window:ToggleTransparency(Value",
+      "Window:UnlockAll("
+    ],
+    "options": [
+      "ButtonConfig.Callback",
+      "ButtonConfig.Color",
+      "ButtonConfig.Icon",
+      "ButtonConfig.IconSize",
+      "ButtonConfig.IconThemed",
+      "ButtonConfig.LayoutOrder",
+      "ButtonConfig.Name",
+      "Config.Acrylic",
+      "Config.Author",
+      "Config.AutoScale",
+      "Config.Background",
+      "Config.BackgroundImageTransparency",
+      "Config.ElementsRadius",
+      "Config.Folder",
+      "Config.Footer",
+      "Config.HidePanelBackground",
+      "Config.HideSearchBar",
+      "Config.Icon",
+      "Config.IconRadius",
+      "Config.IconSize",
+      "Config.IconThemed",
+      "Config.IgnoreAlerts",
+      "Config.MaxSize",
+      "Config.MinSize",
+      "Config.NewElements",
+      "Config.OpenButton",
+      "Config.Radius",
+      "Config.Resizable",
+      "Config.ScrollBarEnabled",
+      "Config.ShadowTransparency",
+      "Config.SideBarWidth",
+      "Config.Size",
+      "Config.Title",
+      "Config.ToggleKey",
+      "Config.TopBarButtonIconSize",
+      "Config.Topbar",
+      "Config.Transparent",
+      "Config.User",
+      "DialogConfig.Buttons",
+      "DialogConfig.Content",
+      "DialogConfig.Icon",
+      "DialogConfig.IconThemed",
+      "DialogConfig.Title",
+      "DialogConfig.Width"
+    ]
+  },
+  "src/components/window/Openbutton.lua": {
+    "methods": [
+      "OpenButton.New(Window",
+      "OpenButtonMain:Edit(OpenButtonConfig",
+      "OpenButtonMain:SetIcon(newIcon",
+      "OpenButtonMain:SetScale(scale",
+      "OpenButtonMain:Visible(v"
+    ],
+    "options": [
+      "OpenButtonConfig.Color",
+      "OpenButtonConfig.CornerRadius",
+      "OpenButtonConfig.Draggable",
+      "OpenButtonConfig.Enabled",
+      "OpenButtonConfig.Icon",
+      "OpenButtonConfig.OnlyIcon",
+      "OpenButtonConfig.OnlyMobile",
+      "OpenButtonConfig.Position",
+      "OpenButtonConfig.Scale",
+      "OpenButtonConfig.StrokeThickness",
+      "OpenButtonConfig.Title"
+    ]
+  },
+  "src/components/window/Section.lua": {
+    "methods": [
+      "Section.New(SectionConfig, Parent, Folder, UIScale, Window",
+      "SectionModule:Close(",
+      "SectionModule:Open(",
+      "SectionModule:Tab(TabConfig"
+    ],
+    "options": [
+      "SectionConfig.Icon",
+      "SectionConfig.IconThemed",
+      "SectionConfig.Opened",
+      "SectionConfig.Title"
+    ]
+  },
+  "src/components/window/Tab.lua": {
+    "methods": [
+      "Tab:GetLocked(",
+      "Tab:GetUnlocked(",
+      "Tab:LockAll(",
+      "Tab:ScrollToTheElement(elemindex",
+      "Tab:Select(",
+      "Tab:UnlockAll(",
+      "TabModule.Init(WindowTable, BrineUITable, ToolTipParent, TabHighlight",
+      "TabModule.New(Config, UIScale",
+      "TabModule:OnChange(func",
+      "TabModule:SelectTab(TabIndex"
+    ],
+    "options": [
+      "Config.Border",
+      "Config.CustomEmptyPage",
+      "Config.Desc",
+      "Config.Icon",
+      "Config.IconColor",
+      "Config.IconShape",
+      "Config.IconThemed",
+      "Config.Locked",
+      "Config.ShowTabTitle",
+      "Config.TabTitleAlign",
+      "Config.Title"
+    ]
+  },
+  "src/config/Init.lua": {
+    "methods": [
+      "ConfigManager:AllConfigs(",
+      "ConfigManager:Config(configFilename, autoload",
+      "ConfigManager:CreateConfig(configFilename, autoload",
+      "ConfigManager:DeleteConfig(configName",
+      "ConfigManager:GetAutoLoadConfigs(",
+      "ConfigManager:GetConfig(configName",
+      "ConfigManager:Init(WindowTable",
+      "ConfigManager:SetPath(customPath",
+      "ConfigModule:Delete(",
+      "ConfigModule:Get(key",
+      "ConfigModule:GetData(",
+      "ConfigModule:Load(",
+      "ConfigModule:Register(Name, Element",
+      "ConfigModule:Save(",
+      "ConfigModule:Set(key, value",
+      "ConfigModule:SetAsCurrent(",
+      "ConfigModule:SetAutoLoad(Value"
+    ],
+    "options": [
+      "CurrentConfig.Path"
+    ]
+  },
+  "src/elements/Button.lua": {
+    "methods": [
+      "Button:Lock(",
+      "Button:Unlock(",
+      "Element:New(Config"
+    ],
+    "options": [
+      "Config.Callback",
+      "Config.Color",
+      "Config.Desc",
+      "Config.Icon",
+      "Config.IconAlign",
+      "Config.IconColor",
+      "Config.IconThemed",
+      "Config.Justify",
+      "Config.Locked",
+      "Config.LockedTitle",
+      "Config.Size",
+      "Config.Tags",
+      "Config.Title"
+    ]
+  },
+  "src/elements/Code.lua": {
+    "methods": [
+      "Code.UpdateShape(Tab",
+      "Code:Destroy(",
+      "Code:Set(code",
+      "Code:SetCode(code",
+      "Element:New(Config"
+    ],
+    "options": [
+      "Config.CanCopied",
+      "Config.Code",
+      "Config.CodeSize",
+      "Config.CodeTheme",
+      "Config.Height",
+      "Config.OnCopy",
+      "Config.ParentType",
+      "Config.Title"
+    ]
+  },
+  "src/elements/Colorpicker.lua": {
+    "methods": [
+      "Colorpicker:Lock(",
+      "Colorpicker:Round(Number, Factor",
+      "Colorpicker:Set(c, t",
+      "Colorpicker:SetHSVFromRGB(Color",
+      "Colorpicker:Unlock(",
+      "Colorpicker:Update(Color, Transparency",
+      "Colorpicker:Update(color, transparency",
+      "Element:Colorpicker(Config, Window, BrineUI, OnApply",
+      "Element:New(Config"
+    ],
+    "options": [
+      "Config.Callback",
+      "Config.Default",
+      "Config.Desc",
+      "Config.IsShowed",
+      "Config.Locked",
+      "Config.LockedTitle",
+      "Config.Tags",
+      "Config.Title",
+      "Config.Transparency",
+      "Config.UIElements",
+      "Config.Value"
+    ]
+  },
+  "src/elements/Divider.lua": {
+    "methods": [
+      "Element:New(Config"
+    ],
+    "options": [
+      "Config.ParentType"
+    ]
+  },
+  "src/elements/Dropdown.lua": {
+    "methods": [
+      "Dropdown:Lock(",
+      "Dropdown:Unlock(",
+      "Element:New(Config"
+    ],
+    "options": [
+      "Config.AllowNone",
+      "Config.Callback",
+      "Config.Desc",
+      "Config.Locked",
+      "Config.LockedTitle",
+      "Config.MenuWidth",
+      "Config.Multi",
+      "Config.SearchBarEnabled",
+      "Config.Tags",
+      "Config.Title",
+      "Config.Value",
+      "Config.Values"
+    ]
+  },
+  "src/elements/Group.lua": {
+    "methods": [
+      "Element:New(Config"
+    ],
+    "options": []
+  },
+  "src/elements/HStack.lua": {
+    "methods": [
+      "Element:New(Config"
+    ],
+    "options": [
+      "Config.AutoSpace"
+    ]
+  },
+  "src/elements/Image.lua": {
+    "methods": [
+      "Element:New(Config",
+      "ImageModule:Destroy("
+    ],
+    "options": [
+      "Config.AspectRatio",
+      "Config.Image",
+      "Config.Radius",
+      "ElementConfig.UICorner"
+    ]
+  },
+  "src/elements/Init.lua": {
+    "methods": [
+      "content:Destroy(",
+      "content:Highlight(",
+      "content:SetDesc(desc",
+      "content:SetImage(image, size",
+      "content:SetThumbnail(image, size",
+      "content:SetTitle(title",
+      "tbl:UpdateAllElementShapes(bbb"
+    ],
+    "options": []
+  },
+  "src/elements/Input.lua": {
+    "methods": [
+      "Element:New(Config",
+      "Input:Lock(",
+      "Input:Set(v, IsUserInput",
+      "Input:SetPlaceholder(v",
+      "Input:Unlock("
+    ],
+    "options": [
+      "Config.Callback",
+      "Config.ClearTextOnFocus",
+      "Config.Desc",
+      "Config.InputIcon",
+      "Config.Locked",
+      "Config.LockedTitle",
+      "Config.Placeholder",
+      "Config.Tags",
+      "Config.Title",
+      "Config.Type",
+      "Config.Value"
+    ]
+  },
+  "src/elements/Keybind.lua": {
+    "methods": [
+      "Element:New(Config",
+      "Keybind:Lock(",
+      "Keybind:Set(v",
+      "Keybind:Unlock("
+    ],
+    "options": [
+      "Config.Blacklist",
+      "Config.Callback",
+      "Config.CanChange",
+      "Config.Desc",
+      "Config.Locked",
+      "Config.LockedTitle",
+      "Config.Tags",
+      "Config.Title",
+      "Config.Value"
+    ]
+  },
+  "src/elements/Paragraph.lua": {
+    "methods": [
+      "Element:New(ElementConfig"
+    ],
+    "options": [
+      "ElementConfig.Buttons",
+      "ElementConfig.Desc",
+      "ElementConfig.Hover",
+      "ElementConfig.IsButtons",
+      "ElementConfig.Locked",
+      "ElementConfig.TextOffset",
+      "ElementConfig.Title"
+    ]
+  },
+  "src/elements/ProgressBar.lua": {
+    "methods": [
+      "Element:New(Config",
+      "ProgressBar:Get(",
+      "ProgressBar:GetPercentage(",
+      "ProgressBar:Set(Value",
+      "ProgressBar:SetMax(NewMax",
+      "ProgressBar:SetMin(NewMin",
+      "ProgressBar:SetRange(NewMin, NewMax"
+    ],
+    "options": [
+      "Config.Animate",
+      "Config.AnimationDuration",
+      "Config.ControlGap",
+      "Config.Default",
+      "Config.Desc",
+      "Config.DisplayMode",
+      "Config.Format",
+      "Config.Indeterminate",
+      "Config.IndeterminateText",
+      "Config.Max",
+      "Config.Min",
+      "Config.ShowValue",
+      "Config.Speed",
+      "Config.Tags",
+      "Config.Title",
+      "Config.Value",
+      "Config.ValueWidth",
+      "Config.Width",
+      "ValueConfig.Default",
+      "ValueConfig.Max",
+      "ValueConfig.Min"
+    ]
+  },
+  "src/elements/Section.lua": {
+    "methods": [
+      "Element:New(Config",
+      "Section:Close(IsNotAnim",
+      "Section:Destroy(",
+      "Section:Open(IsNotAnim",
+      "Section:SetDesc(Desc",
+      "Section:SetIcon(i",
+      "Section:SetTitle(Title"
+    ],
+    "options": [
+      "Config.Box",
+      "Config.BoxBorder",
+      "Config.Desc",
+      "Config.DescFontWeight",
+      "Config.DescTextSize",
+      "Config.DescTextTransparency",
+      "Config.FontWeight",
+      "Config.Icon",
+      "Config.IconThemed",
+      "Config.Opened",
+      "Config.TextSize",
+      "Config.TextTransparency",
+      "Config.TextXAlignment",
+      "Config.Title",
+      "ElementConfig.UICorner",
+      "ElementConfig.UIPadding"
+    ]
+  },
+  "src/elements/Slider.lua": {
+    "methods": [
+      "Element:New(Config",
+      "Slider:Lock(",
+      "Slider:Set(Value, input",
+      "Slider:SetMax(newMax",
+      "Slider:SetMin(newMin",
+      "Slider:Unlock("
+    ],
+    "options": [
+      "Config.Callback",
+      "Config.Desc",
+      "Config.Icons",
+      "Config.IsTextbox",
+      "Config.IsTooltip",
+      "Config.Locked",
+      "Config.LockedTitle",
+      "Config.Step",
+      "Config.Tags",
+      "Config.Title",
+      "Config.Value",
+      "Config.Width"
+    ]
+  },
+  "src/elements/Space.lua": {
+    "methods": [
+      "Element:New(Config"
+    ],
+    "options": [
+      "Config.Columns",
+      "Config.ParentType"
+    ]
+  },
+  "src/elements/Toggle.lua": {
+    "methods": [
+      "Element:New(Config",
+      "Toggle:Lock(",
+      "Toggle:Set(v, isCallback, isAnim",
+      "Toggle:Unlock("
+    ],
+    "options": [
+      "Config.Callback",
+      "Config.Desc",
+      "Config.Icon",
+      "Config.IconSize",
+      "Config.Locked",
+      "Config.LockedTitle",
+      "Config.Tags",
+      "Config.Title",
+      "Config.Type",
+      "Config.Value"
+    ]
+  },
+  "src/elements/VStack.lua": {
+    "methods": [
+      "Element:New(Config"
+    ],
+    "options": []
+  },
+  "src/elements/Video.lua": {
+    "methods": [
+      "Element:New(Config",
+      "VideoModule:Destroy("
+    ],
+    "options": [
+      "Config.AspectRatio",
+      "Config.Radius",
+      "Config.Video",
+      "ElementConfig.UICorner"
+    ]
+  },
+  "src/elements/Viewport.lua": {
+    "methods": [
+      "Element:New(Config: ConfigType",
+      "Viewport:Focus(",
+      "Viewport:SetCamera(Camera",
+      "Viewport:SetHeight(Height",
+      "Viewport:SetInteractive(Interactive",
+      "Viewport:SetObject(Object, IsClone"
+    ],
+    "options": [
+      "Config.Camera",
+      "Config.Focused",
+      "Config.Height",
+      "Config.Interactive",
+      "Config.Object",
+      "ElementConfig.UICorner"
+    ]
+  },
+  "src/modules/Creator.lua": {
+    "methods": [
+      "Creator.AddFontObject(Object",
+      "Creator.AddIcons(packName, iconsData",
+      "Creator.AddLangObject(idx",
+      "Creator.AddSignal(Signal, Function",
+      "Creator.AddThemeObject(Object, Properties, skipUpdate",
+      "Creator.Color3ToHSB(color",
+      "Creator.DisconnectAll(",
+      "Creator.Drag(mainFrame, dragFrames, ondrag",
+      "Creator.GetAverageColor(gradient",
+      "Creator.GetPerceivedBrightness(color",
+      "Creator.GetTextColorForHSB(color, contrast",
+      "Creator.GetThemeProperty(Property, Theme",
+      "Creator.Gradient(stops, props",
+      "Creator.Icon(Icon, formatdefault",
+      "Creator.Image(Img, Name, Corner, Folder, Type, IsThemeTag, Themed, ThemeTagName",
+      "Creator.Init(BrineUITable",
+      "Creator.New(Name, Properties, Children",
+      "Creator.NewRoundFrame(Radius, Type, Properties, Children, IsButton, ReturnTable",
+      "Creator.SafeCallback(Function, ...",
+      "Creator.SanitizeFilename(url",
+      "Creator.SetDraggable(can",
+      "Creator.SetLangForObject(index",
+      "Creator.SetLanguage(lang",
+      "Creator.SetTheme(Theme",
+      "Creator.SetThemeTag(Object, ThemeTag, Duration, EasingStyle, EasingDirection",
+      "Creator.Tween(Object, Time, Properties, ...",
+      "Creator.UpdateFont(FontId",
+      "Creator.UpdateLang(newLang",
+      "Creator.UpdateTheme(TargetObject, isTween, isTweenTarget, Duration, EasingStyle, EasingDirection",
+      "Creator:AddColor(base, add, weight",
+      "Creator:ChangeTranslationKey(object, newKey",
+      "Creator:GenerateUniqueID(",
+      "Creator:GetElementPosition(elements, targetIndex, isHStack",
+      "Creator:OnThemeChange(callback",
+      "DragModule:Set(v"
+    ],
+    "options": []
+  },
+  "src/modules/DynamicShape.lua": {
+    "methods": [
+      "DynamicShapeModule:Init(CreatorObj",
+      "DynamicShapeModule:New(Radius, Type, Properties, Children, IsButton, IsSlice",
+      "Wrapper:GetRadius(",
+      "Wrapper:GetType(",
+      "Wrapper:SetRadius(NewRadius",
+      "Wrapper:SetType(NewType"
+    ],
+    "options": []
+  },
+  "src/modules/Highlighter.lua": {
+    "methods": [
+      "highlighter.run(source, newColors"
+    ],
+    "options": []
+  },
+  "src/modules/Localization.lua": {
+    "methods": [
+      "Localization:New(LocalizationConfig, Creator"
+    ],
+    "options": [
+      "LocalizationConfig.DefaultLanguage",
+      "LocalizationConfig.Enabled",
+      "LocalizationConfig.Prefix",
+      "LocalizationConfig.Translations"
+    ]
+  },
+  "src/themes/Fallbacks.lua": {
+    "methods": [],
+    "options": []
+  },
+  "src/themes/Init.lua": {
+    "methods": [],
+    "options": []
+  },
+  "src/utils/Acrylic/Blur.lua": {
+    "methods": [],
+    "options": []
+  },
+  "src/utils/Acrylic/Init.lua": {
+    "methods": [
+      "Acrylic.Disable(",
+      "Acrylic.Enable(",
+      "Acrylic.init("
+    ],
+    "options": []
+  },
+  "src/utils/Acrylic/Paint.lua": {
+    "methods": [],
+    "options": []
+  },
+  "src/utils/Acrylic/Utils.lua": {
+    "methods": [],
+    "options": []
+  },
+  "src/utils/services/Init.lua": {
+    "methods": [],
+    "options": []
+  },
+  "src/utils/services/JunkieDevelopment.lua": {
+    "methods": [
+      "JunkieDevelopment.New(ServiceId, ApiKey, Provider"
+    ],
+    "options": []
+  },
+  "src/utils/services/Luarmor.lua": {
+    "methods": [
+      "Luarmor.New(scriptId, discord"
+    ],
+    "options": []
+  },
+  "src/utils/services/PandaDevelopment.lua": {
+    "methods": [
+      "PandaDevelopment.New(serviceId"
+    ],
+    "options": []
+  },
+  "src/utils/services/Platoboost.lua": {
+    "methods": [
+      "Platoboost.New(Service, Secret"
+    ],
+    "options": []
+  }
+}

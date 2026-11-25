@@ -1,0 +1,27 @@
+name: Check BrineUI
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install pinned build tools
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force .tools | Out-Null
+          Invoke-WebRequest https://github.com/seaofvoices/darklua/releases/download/v0.19.0/darklua-windows-x86_64.zip -OutFile .tools/darklua.zip
+          Expand-Archive .tools/darklua.zip .tools/darklua
+          Invoke-WebRequest https://github.com/luau-lang/luau/releases/download/0.748/luau-windows.zip -OutFile .tools/luau.zip
+          Expand-Archive .tools/luau.zip .tools/luau
+          "DARKLUA=$((Resolve-Path .tools/darklua/darklua.exe).Path)" >> $env:GITHUB_ENV
+          "LUAU=$((Resolve-Path .tools/luau/luau.exe).Path)" >> $env:GITHUB_ENV
+          "LUAU_COMPILE=$((Resolve-Path .tools/luau/luau-compile.exe).Path)" >> $env:GITHUB_ENV
+      - run: npm run check

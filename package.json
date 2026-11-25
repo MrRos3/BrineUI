@@ -1,0 +1,32 @@
+{
+  "name": "brine-ui",
+  "version": "0.3.7",
+  "main": "./dist/main.lua",
+  "repository": "https://github.com/MrRos3/BrineUI",
+  "author": "Salty (MrRos3)",
+  "description": "BrineUI is a Roblox UI library with liquid glass themes",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node scripts/build.mjs",
+    "build": "node scripts/build.mjs",
+    "live": "python3 -m http.server 8642",
+    "watch": "chokidar . -i 'node_modules' -i 'dist' -i 'build' -c 'npm run dev --'",
+    "live-build": "concurrently \"npm run live\" \"npm run watch --\"",
+    "audit": "node scripts/audit.mjs",
+    "test": "node scripts/test.mjs",
+    "contrast": "node scripts/contrast.mjs",
+    "render": "node scripts/render.mjs",
+    "check": "npm run build && npm run audit && npm test && npm run contrast && npm run render"
+  },
+  "keywords": [
+    "ui-library",
+    "ui-design",
+    "roblox",
+    "luau"
+  ],
+  "devDependencies": {
+    "chokidar-cli": "^3.0.0",
+    "concurrently": "^9.2.0"
+  },
+  "private": true
+}

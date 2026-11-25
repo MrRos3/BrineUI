@@ -1,0 +1,13 @@
+-- Open menu, notification and close dialog together.
+local Window = Brine:CreateWindow({ Title = "Brine", Author = "by Salty", Theme = THEME, Size = UDim2.fromOffset(620, 460), AutoScale = false, HideSearchBar = false })
+run(0.1)
+local T = Window:Tab({ Title = "Session", Icon = "layers", ShowTabTitle = true })
+Window:Tab({ Title = "Controls", Icon = "sliders-horizontal" })
+local D = T:Dropdown({ Title = "Profile", Values = { "Balanced", "Quiet", "Focused", { Title = "Custom", Icon = "pen" } }, Value = "Balanced", Callback = function() end })
+T:Toggle({ Title = "Notifications", Value = true })
+T:Select()
+run(1)
+D:Open()
+Brine:Notify({ Title = "All set", Content = "Your session is ready.", Icon = "check", Duration = 60 })
+run(1)
+emit()
