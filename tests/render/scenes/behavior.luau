@@ -114,15 +114,33 @@ end
 local dot = order[2].Object.AbsolutePosition
 UIS_MouseMove(dot.X + 11, dot.Y + 18)
 run(0.2)
-for _, b in order do assert(b.Object:GetChildren()[1]:FindFirstChild("Frame") .ImageLabel.ImageTransparency < 1, "pointing at one shows every symbol") end
+for _, b in order do assert(find(b.Object, "Glyph").Visible, "pointing at one shows every symbol") end
 UIS_MouseMove(dot.X + 300, dot.Y + 300)
 run(0.2)
-assert(order[1].Object:GetChildren()[1]:FindFirstChild("Frame").ImageLabel.ImageTransparency == 1, "symbols hide again")
+assert(not find(order[1].Object, "Glyph").Visible, "symbols hide again")
 click(topbar.Actions:GetChildren()[4]:GetChildren()[1])
 assert(custom == 1, "custom topbar button")
 click(order[1].Object.Hitbox)
 assert(Window.IsFullscreen, "green goes fullscreen")
 click(order[1].Object.Hitbox)
+-- Minimizing leaves a badge on every device; a click on it reopens the window, a drag moves it.
+Window:Close()
+run(1)
+local badge = Window.OpenButtonMain.Button
+assert(badge.Parent.Visible and badge.AbsoluteSize.X == badge.AbsoluteSize.Y, "square badge after minimize")
+local function tap(dx)
+	local hit = badge.TextButton
+	local input = { UserInputType = Enum.UserInputType.MouseButton1, Position = Vector3.new(100, 100, 0) }
+	hit.InputBegan:Fire(input)
+	if dx then UIS.InputChanged:Fire({ UserInputType = Enum.UserInputType.MouseMovement, Position = Vector3.new(100 + dx, 100, 0) }) end
+	UIS.InputEnded:Fire(input)
+	run(1)
+end
+local before = badge.Parent.Position
+tap(60)
+assert(Window.Closed and badge.Parent.Position.X.Offset == before.X.Offset + 60, "dragging moves the badge")
+tap()
+assert(not Window.Closed and not badge.Parent.Visible, "clicking the badge reopens")
 Window:SetTitle("New"); Window:SetSize(UDim2.fromOffset(700, 500)); Window:ToggleTransparency(true); Window:SetUIScale(0.8); Window:SetUIScale(1)
 Window:EditOpenButton({ Title = "Open", Color = ColorSequence.new(Color3.fromHex("40c9ff"), Color3.fromHex("e81cff")), CornerRadius = UDim.new(1, 0) })
 Brine:Popup({ Title = "Popup", Content = "Text", Icon = "info", Buttons = { { Title = "OK", Variant = "Primary", Callback = function() end } } })

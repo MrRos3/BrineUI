@@ -320,7 +320,7 @@ workspace = Instance.new("Workspace")
 rawget(workspace, "__props").CurrentCamera = camera
 local mouse = { X = 0, Y = 0, Move = newSignal() }
 local player = { UserId = 1, Name = "brine", DisplayName = "Brine", GetMouse = function() return mouse end, WaitForChild = function() return playerGui end }
-UIS = { InputBegan = newSignal(), InputEnded = newSignal(), InputChanged = newSignal(), TouchEnabled = false, KeyboardEnabled = true, GetFocusedTextBox = function() end, GetMouseLocation = function() return UIS_Point or Vector2.new(0, 0) end }
+UIS = { InputBegan = newSignal(), InputEnded = newSignal(), InputChanged = newSignal(), WindowFocusReleased = newSignal(), MouseEnabled = true, TouchEnabled = false, KeyboardEnabled = true, GetFocusedTextBox = function() end, GetMouseLocation = function() return UIS_Point or Vector2.new(0, 0) end }
 UIS_MouseMove = function(x, y) UIS_Point = Vector2.new(x, y) UIS.InputChanged:Fire({ UserInputType = Enum.UserInputType.MouseMovement, Position = Vector3.new(x, y, 0) }) end
 local services = {
 	RunService = { IsStudio = function() return true end, Heartbeat = newSignal(), RenderStepped = newSignal() },

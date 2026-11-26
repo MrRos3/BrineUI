@@ -24,6 +24,7 @@ local CreateButton = require("../ui/Button").New
 local CreateScrollSlider = require("../ui/ScrollSlider").New
 local Tag = require("../ui/Tag")
 local CreateBrineMark = require("./BrineMark")
+local CreateLightGlyph = require("./LightGlyph")
 
 local ConfigManager = require("../../config/Init")
 
@@ -980,20 +981,29 @@ return function(Config)
 	local function ShowLightIcons()
 		local Shown = PointsAtLights or Window.IsPC == false
 		for _, LightIcon in next, LightIcons do
-			Tween(LightIcon, 0.1, { ImageTransparency = Shown and 0.3 or 1 }):Play()
+			LightIcon.Visible = Shown
 		end
 	end
-
-	Creator.AddSignal(UserInputService.InputChanged, function(input)
-		if input.UserInputType ~= Enum.UserInputType.MouseMovement or #LightIcons == 0 then
-			return
-		end
+	local function UpdateLightPointer()
 		local Points = not Window.Closed
+			and UserInputService.MouseEnabled ~= false
 			and ScreenSpace.Contains(Window.UIElements.Main.Main.Topbar.Right, ScreenSpace.Mouse())
 		if Points ~= PointsAtLights then
 			PointsAtLights = Points
 			ShowLightIcons()
 		end
+	end
+	-- Leaving the Roblox window sends no more movement, so hide them then too.
+	Creator.AddSignal(UserInputService.WindowFocusReleased, function()
+		PointsAtLights = false
+		ShowLightIcons()
+	end)
+
+	Creator.AddSignal(UserInputService.InputChanged, function(input)
+		if input.UserInputType ~= Enum.UserInputType.MouseMovement or #LightIcons == 0 then
+			return
+		end
+		UpdateLightPointer()
 	end)
 
 	function Window:CreateTopbarButton(Name, Icon, Callback, LayoutOrder, IconThemed, Color, IconSize)
@@ -1017,9 +1027,17 @@ return function(Config)
 		IconFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 		IconFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
 		if IsLight then
-			IconFrame.ImageLabel.ImageColor3 = Color3.new(0, 0, 0)
-			IconFrame.ImageLabel.ImageTransparency = 1
-			table.insert(LightIcons, IconFrame.ImageLabel)
+			-- The window's own lights draw their symbol; a script's light keeps its icon.
+			local Glyph = WINDOW_BUTTONS[Name] and CreateLightGlyph(Name)
+			if Glyph then
+				IconFrame:Destroy()
+				IconFrame = Glyph
+			else
+				IconFrame.ImageLabel.ImageColor3 = Color3.new(0, 0, 0)
+				IconFrame.ImageLabel.ImageTransparency = 0.45
+				IconFrame.Visible = false
+			end
+			table.insert(LightIcons, IconFrame)
 		end
 
 		local Button
@@ -1092,6 +1110,9 @@ return function(Config)
 		Creator.AddSignal(Trigger.MouseButton1Click, function()
 			if Callback then
 				Callback()
+			end
+			if IsLight then
+				task.defer(UpdateLightPointer)
 			end
 		end)
 		Creator.AddSignal(Trigger.MouseEnter, function()
@@ -1572,7 +1593,12 @@ return function(Config)
 
 			Window.UIElements.Main.Visible = false
 
-			if Window.OpenButtonMain and not Window.Destroyed and not Window.IsPC and Window.IsOpenButtonEnabled then
+			if
+				Window.OpenButtonMain
+				and not Window.Destroyed
+				and Window.IsOpenButtonEnabled
+				and not (Window.OpenButtonMobileOnly and Window.IsPC)
+			then
 				Window.OpenButtonMain:Visible(true)
 			end
 		end)
@@ -1718,12 +1744,11 @@ return function(Config)
 		end
 	end
 
-	if Window.OpenButtonMain and Window.OpenButtonMain.Button then
-		Creator.AddSignal(Window.OpenButtonMain.Button.TextButton.MouseButton1Click, function()
-			-- OpenButtonContainer.Visible = false
-			--Window.OpenButtonMain:Visible(false)
+	if Window.OpenButtonMain then
+		-- The badge tells a click from a drag itself.
+		Window.OpenButtonMain.OnClick = function()
 			Window:Open()
-		end)
+		end
 	end
 
 	Creator.AddSignal(UserInputService.InputBegan, function(input, isProcessed)

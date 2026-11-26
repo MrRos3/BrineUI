@@ -11,7 +11,9 @@ const notices = [
   fs.readFileSync('LICENSE', 'utf8'),
   'Upstream MIT license:\n' + fs.readFileSync('licenses/Upstream-LICENSE', 'utf8'),
   'Icons dependency:\n' + fs.readFileSync('src/Icons/LICENSE', 'utf8'),
-  fs.readFileSync('THIRD_PARTY_NOTICES.md', 'utf8'),
+  // The icon packs' own terms still apply; Solar's CC BY 4.0 license requires this credit.
+  'Icon packs: Lucide (ISC), Gravity UI (MIT), Craft, Geist and SF Symbols keep their own terms. ' +
+    'Solar icons by 480 Design, https://github.com/480-Design/Solar-Icon-Set, CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/).',
   'Lucide:\n' + fs.readFileSync('licenses/Lucide-LICENSE', 'utf8'),
   'Gravity UI:\n' + fs.readFileSync('licenses/Gravity-LICENSE', 'utf8'),
 ].join('\n\n');
