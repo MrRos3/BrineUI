@@ -88,8 +88,10 @@ function SearchBar.new(TabModule, Parent, OnClose)
 	})
 
 	local SearchIconData = Creator.Icon("search")
+	-- Sized by its contents: the search row alone, then the results as they come.
 	local SearchFrame = Creator.NewRoundFrame(SearchBarModule.Radius, "Squircle", {
-		Size = UDim2.new(1, 0, 1, 0),
+		Size = UDim2.new(1, 0, 0, 0),
+		AutomaticSize = "Y",
 		ThemeTag = {
 			ImageColor3 = "WindowSearchBarBackground",
 		},
@@ -97,9 +99,9 @@ function SearchBar.new(TabModule, Parent, OnClose)
 	}, {
 		Glass.Pane(SearchBarModule.Radius),
 		Creator.NewRoundFrame(SearchBarModule.Radius, "Squircle", {
-			Size = UDim2.new(1, 0, 1, 0),
+			Size = UDim2.new(1, 0, 0, 0),
 			BackgroundTransparency = 1,
-			--AutomaticSize = "Y",
+			AutomaticSize = "Y",
 			Visible = false,
 			ThemeTag = {
 				ImageColor3 = "White",

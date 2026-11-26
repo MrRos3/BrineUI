@@ -204,8 +204,10 @@ function TabModule.New(Config, UIScale)
 			TextOffset = -16 - 2 - (Window.UIPadding / 2)
 			Tab.UIElements.Main.Frame.TextLabel.Size = UDim2.new(1, TextOffset, 0, 0)
 		elseif Tab.IconColor then
+			-- An app-icon square: about a third of its 26px side, so it reads as a square.
+			local ICON_SQUARE_RADIUS = 8
 			local _IconBG = Creator.NewRoundFrame(
-				Tab.IconShape ~= "Circle" and (Tab.UICorner + 5 - (2 + (Window.UIPadding / 4))) or 9999,
+				Tab.IconShape ~= "Circle" and ICON_SQUARE_RADIUS or 9999,
 				"Squircle",
 				{
 					Size = UDim2.new(0, 26, 0, 26),
@@ -215,14 +217,15 @@ function TabModule.New(Config, UIScale)
 				{
 					Icon,
 					Creator.NewRoundFrame(
-						Tab.IconShape ~= "Circle" and (Tab.UICorner + 5 - (2 + (Window.UIPadding / 4))) or 9999,
+						Tab.IconShape ~= "Circle" and ICON_SQUARE_RADIUS or 9999,
 						"Glass-1.4",
 						{
 							Size = UDim2.new(1, 0, 1, 0),
 							ThemeTag = {
 								ImageColor3 = "White",
 							},
-							ImageTransparency = 0,
+							-- A soft lit rim; a solid white ring looked harsh at 26px.
+							ImageTransparency = 0.6,
 							Name = "Outline",
 						},
 						{

@@ -42,6 +42,11 @@ for _, d in { Drop, Low } do
 	d:Close()
 	run(0.5)
 end
+-- Clicking the field opens the menu; clicking it again closes it.
+click(Drop.UIElements.Dropdown)
+assert(Drop.UIElements.MenuCanvas.Visible and Drop.UIElements.Menu.Visible, "a click opens the menu")
+click(Drop.UIElements.Dropdown)
+assert(not Drop.UIElements.MenuCanvas.Visible, "a second click closes the menu")
 Button:Lock()
 click(Button.ButtonFrame.UIElements.Main)
 assert(got.button == 1 and Button.ButtonFrame.UIElements.Locked.Visible, "locked button fired")

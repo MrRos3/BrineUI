@@ -1,5 +1,5 @@
 --[==[
-BrineUI 0.3.11 by Salty (MrRos3)
+BrineUI 0.3.12 by Salty (MrRos3)
 MIT License
 
 Copyright (c) 2026 Salty (MrRos3)
@@ -262,119 +262,202 @@ AutoChange=false,
 },
 }
 
-function d.Init(e,f)
-b=f
-return e.New
+
+
+
+
+local function IsSmooth(e)
+return not string.find(e,"%-T")and not string.find(e,"%-B")and e~="Square"
+end
+local function IsLine(e)
+return string.find(e,"Outline")~=nil or string.find(e,"Glass")~=nil
 end
 
-function d.New(e,f,g,h,i,j,l)
-local m={
-Radius=f or 0,
-Type=g or"Circle",
+local e=NumberSequence.new{
+NumberSequenceKeypoint.new(0,0),
+NumberSequenceKeypoint.new(0.4,0.55),
+NumberSequenceKeypoint.new(0.7,0.65),
+NumberSequenceKeypoint.new(1,0.3),
+}
+
+function d.Init(f,g)
+b=g
+return f.New
+end
+
+function d.New(f,g,h,i,j,l,m)
+local p={
+Radius=g or 0,
+Type=h or"Circle",
 GetRadius=nil,
 GetType=nil,
 SetRadius=nil,
 SetType=nil,
 }
 
-local p={
+local r={
 ["Glass-0.7"]="SquircleGlass",
 ["Glass-1"]="SquircleGlass",
 ["Glass-1.4"]="SquircleGlass",
 ["Squircle-Outline"]="SquircleOutline",
 }
 
-local function GetShape(r)
-return d.Shapes[p[r]or r]or d.Shapes.Circle
+local function GetShape(u)
+return d.Shapes[r[u]or u]or d.Shapes.Circle
 end
 
-local r=b.New(j and"ImageButton"or"ImageLabel",{
+local u=b.New(l and"ImageButton"or"ImageLabel",{
 Image="",
-ScaleType=l~=false and"Slice"or nil,
-SliceCenter=m.Type~="Squircle"and Rect.new(512,512,512,512)or nil,
+ScaleType=m~=false and"Slice"or nil,
+SliceCenter=p.Type~="Squircle"and Rect.new(512,512,512,512)or nil,
 SliceScale=1,
-ThemeTag=h and h.ThemeTag or nil,
+ThemeTag=i and i.ThemeTag or nil,
 BackgroundTransparency=1,
-},i)
+},j)
 
-for u,v in next,h do
-if not table.find({"ThemeTag"},u)then
-r[u]=v
+for v,x in next,i do
+if not table.find({"ThemeTag"},v)then
+u[v]=x
 end
 end
 
-function m.SetRadius(u,v)
-m.Radius=v
-r.SliceScale=math.max(v/GetShape(m.Type).Radius,0.0001)
-return m
+
+
+local v=IsSmooth(h or"Circle")
+local x,z
+local function Sync()
+if not v then
+return
+end
+if IsLine(p.Type)then
+u.BackgroundTransparency=1
+z.Color=u.ImageColor3
+z.Transparency=u.ImageTransparency
+else
+u.BackgroundColor3=u.ImageColor3
+u.BackgroundTransparency=u.ImageTransparency
+end
+end
+local function ApplySmooth()
+if not v then
+return
+end
+if not x then
+x=b.New("UICorner",{Name="ShapeCorner"})
+z=b.New("UIStroke",{
+Name="ShapeLine",
+Thickness=1,
+ApplyStrokeMode="Border",
+Enabled=false,
+},{
+b.New("UIGradient",{Rotation=55,Transparency=e,Enabled=false}),
+})
+end
+x.Parent=u
+z.Parent=u
+u.Image=""
+u.ScaleType=Enum.ScaleType.Stretch
+
+x.CornerRadius=(p.Radius==0 or p.Radius>=999)and UDim.new(1,0)
+or UDim.new(0,p.Radius)
+local A=IsLine(p.Type)
+z.Enabled=A
+z.UIGradient.Enabled=A and string.find(p.Type,"Glass")~=nil
+Sync()
 end
 
-function m.SetType(u,v)
-m.Type=v
-local x=GetShape(v)
-r.Image=x.Image
-r.SliceCenter=x.Rect
-m:SetRadius(m.Radius)
-return m
+function p.SetRadius(A,B)
+p.Radius=B
+if v then
+ApplySmooth()
+else
+u.SliceScale=math.max(B/GetShape(p.Type).Radius,0.0001)
+end
+return p
 end
 
-function m.GetRadius(u)
-return m.Radius
+function p.SetType(A,B)
+p.Type=B
+local C=v
+v=IsSmooth(B)
+if v then
+ApplySmooth()
+return p
+end
+if C and x then
+
+x.Parent=nil
+z.Parent=nil
+u.BackgroundTransparency=1
+u.ScaleType=Enum.ScaleType.Slice
+end
+local F=GetShape(B)
+u.Image=F.Image
+u.SliceCenter=F.Rect
+p:SetRadius(p.Radius)
+return p
 end
 
-function m.GetType(u)
-return m.Type
+b.AddSignal(u:GetPropertyChangedSignal"ImageColor3",Sync)
+b.AddSignal(u:GetPropertyChangedSignal"ImageTransparency",Sync)
+
+function p.GetRadius(A)
+return p.Radius
 end
 
-m:SetRadius(f)
-m:SetType(g)
+function p.GetType(A)
+return p.Type
+end
 
-b.AddSignal(r:GetPropertyChangedSignal"AbsoluteSize",function()
-local u=GetShape(m.Type)
-if u.AutoChange==false then
+p:SetRadius(g)
+p:SetType(h)
+
+b.AddSignal(u:GetPropertyChangedSignal"AbsoluteSize",function()
+local A=GetShape(p.Type)
+if A.AutoChange==false or v then
 return
 end
 
-if string.find(m.Type,"Squircle")then
-local v=string.find(m.Type,"Glass")and"Glass"or nil
-local x=string.find(m.Type,"Outline")and"Outline"or nil
+if string.find(p.Type,"Squircle")then
+local B=string.find(p.Type,"Glass")and"Glass"or nil
+local C=string.find(p.Type,"Outline")and"Outline"or nil
 
-local z=math.round(r.AbsoluteSize.X/b.GetScale())
-local A=math.round(r.AbsoluteSize.Y/b.GetScale())
+local F=math.round(u.AbsoluteSize.X/b.GetScale())
+local G=math.round(u.AbsoluteSize.Y/b.GetScale())
 
-local B=m.Radius~=0 and m.Radius or math.min(z,A)/2
-local C=d.Shapes.Squircle.Radius/1024
-local F=B/math.min(z,A)
+local H=p.Radius~=0 and p.Radius or math.min(F,G)/2
+local J=d.Shapes.Squircle.Radius/1024
+local L=H/math.min(F,G)
 
-local G
+local M
 
-if z>A then
-if F>=C then
-G="SquircleH"..(x or v or"")
+if F>G then
+if L>=J then
+M="SquircleH"..(C or B or"")
 else
-G="Squircle"..(x or v or"")
+M="Squircle"..(C or B or"")
 end
-elseif z<A then
-if F>=C then
-G="SquircleV"..(x or v or"")
+elseif F<G then
+if L>=J then
+M="SquircleV"..(C or B or"")
 else
-G="Squircle"..(x or v or"")
+M="Squircle"..(C or B or"")
 end
 else
-if F>=C then
-G="Circle"..(x or v or"")
+if L>=J then
+M="Circle"..(C or B or"")
 else
-G="Squircle"..(x or v or"")
+M="Squircle"..(C or B or"")
 end
 end
 
-if G~=m:GetType()then
-m:SetType(G)
+if M~=p:GetType()then
+p:SetType(M)
 end
 end
 end)
 
-return r,m
+return u,p
 end
 
 return d end function a.b()
@@ -26954,7 +27037,7 @@ New=a.load'q'.New
 
 }end function a.s()
 
-return[==[{"name":"brine-ui","version":"0.3.11","main":"./dist/main.lua","repository":"https://github.com/MrRos3/BrineUI","author":"Salty (MrRos3)","description":"BrineUI is a Roblox UI library with liquid glass themes","license":"MIT","scripts":{"dev":"node scripts/build.mjs","build":"node scripts/build.mjs","live":"python3 -m http.server 8642","watch":"chokidar . -i 'node_modules' -i 'dist' -i 'build' -c 'npm run dev --'","live-build":"concurrently \"npm run live\" \"npm run watch --\"","audit":"node scripts/audit.mjs","test":"node scripts/test.mjs","contrast":"node scripts/contrast.mjs","render":"node scripts/render.mjs","check":"npm run build && npm run audit && npm test && npm run contrast && npm run render"},"keywords":["ui-library","ui-design","roblox","luau"],"devDependencies":{"chokidar-cli":"^3.0.0","concurrently":"^9.2.0"},"private":true}]==]end function a.t()
+return[==[{"name":"brine-ui","version":"0.3.12","main":"./dist/main.lua","repository":"https://github.com/MrRos3/BrineUI","author":"Salty (MrRos3)","description":"BrineUI is a Roblox UI library with liquid glass themes","license":"MIT","scripts":{"dev":"node scripts/build.mjs","build":"node scripts/build.mjs","live":"python3 -m http.server 8642","watch":"chokidar . -i 'node_modules' -i 'dist' -i 'build' -c 'npm run dev --'","live-build":"concurrently \"npm run live\" \"npm run watch --\"","audit":"node scripts/audit.mjs","test":"node scripts/test.mjs","contrast":"node scripts/contrast.mjs","render":"node scripts/render.mjs","check":"npm run build && npm run audit && npm test && npm run contrast && npm run render"},"keywords":["ui-library","ui-design","roblox","luau"],"devDependencies":{"chokidar-cli":"^3.0.0","concurrently":"^9.2.0"},"private":true}]==]end function a.t()
 
 local aa={}
 
@@ -33587,8 +33670,12 @@ end
 RecalculateListSize()
 RecalculateCanvasSize()
 
-function av.Open(ay)
+
+local ay=false
+
+function av.Open(az)
 if not as.Locked then
+ay=true
 as.UIElements.Menu.Visible=true
 as.UIElements.MenuCanvas.Visible=true
 as.UIElements.MenuCanvas.Active=true
@@ -33610,7 +33697,8 @@ UpdatePosition()
 end
 end
 
-function av.Close(ay)
+function av.Close(az)
+ay=false
 as.Opened=false
 
 am(as.UIElements.Menu,0.25,{
@@ -33618,15 +33706,20 @@ Size=UDim2.new(1,0,0,0),
 ImageTransparency=1,
 },Enum.EasingStyle.Quart,Enum.EasingDirection.Out):Play()
 
+
 task.spawn(function()
 task.wait(0.1)
+if not ay then
 as.UIElements.Menu.Visible=false
+end
 end)
 
 task.spawn(function()
 task.wait(0.25)
+if not ay then
 as.UIElements.MenuCanvas.Visible=false
 as.UIElements.MenuCanvas.Active=false
+end
 end)
 end
 
@@ -33635,24 +33728,29 @@ ak.AddSignal(
 as.UIElements.Dropdown and as.UIElements.Dropdown.MouseButton1Click
 or as.DropdownFrame.UIElements.Main.MouseButton1Click
 ),
+
 function()
+if ay then
+av:Close()
+else
 av:Open()
+end
 end
 )
 
-ak.AddSignal(ag.InputBegan,function(ay)
+ak.AddSignal(ag.InputBegan,function(az)
 if
-ay.UserInputType==Enum.UserInputType.MouseButton1
-or ay.UserInputType==Enum.UserInputType.Touch
+az.UserInputType==Enum.UserInputType.MouseButton1
+or az.UserInputType==Enum.UserInputType.Touch
 then
-local az=ao.Mouse()
-local aA=ao.Contains(
+local aA=ao.Mouse()
+local aB=ao.Contains(
 as.UIElements.Dropdown or as.DropdownFrame.UIElements.Main,
-az
+aA
 )
-local aB=ao.Contains(as.UIElements.MenuCanvas,az)
+local b=ao.Contains(as.UIElements.MenuCanvas,aA)
 
-if ar.Window.CanDropdown and as.Opened and not aA and not aB then
+if ar.Window.CanDropdown and as.Opened and not aB and not b then
 av:Close()
 end
 end
@@ -36605,8 +36703,10 @@ aA.ImageLabel.ImageTransparency=not aw.Locked and 0 or 0.6
 az=-18-(Window.UIPadding/2)
 aw.UIElements.Main.Frame.TextLabel.Size=UDim2.new(1,az,0,0)
 elseif aw.IconColor then
+
+local b=8
 am.NewRoundFrame(
-aw.IconShape~="Circle"and(aw.UICorner+5-(2+(Window.UIPadding/4)))or 9999,
+aw.IconShape~="Circle"and b or 9999,
 "Squircle",
 {
 Size=UDim2.new(0,26,0,26),
@@ -36616,14 +36716,15 @@ Parent=aw.UIElements.Main.Frame,
 {
 aA,
 am.NewRoundFrame(
-aw.IconShape~="Circle"and(aw.UICorner+5-(2+(Window.UIPadding/4)))or 9999,
+aw.IconShape~="Circle"and b or 9999,
 "Glass-1.4",
 {
 Size=UDim2.new(1,0,1,0),
 ThemeTag={
 ImageColor3="White",
 },
-ImageTransparency=0,
+
+ImageTransparency=0.6,
 Name="Outline",
 },
 {
@@ -37378,8 +37479,10 @@ PaddingBottom=UDim.new(0,at.Padding),
 })
 
 local ay=ai.Icon"search"
+
 local az=ai.NewRoundFrame(at.Radius,"Squircle",{
-Size=UDim2.new(1,0,1,0),
+Size=UDim2.new(1,0,0,0),
+AutomaticSize="Y",
 ThemeTag={
 ImageColor3="WindowSearchBarBackground",
 },
@@ -37387,9 +37490,9 @@ ImageTransparency=0,
 },{
 ao.Pane(at.Radius),
 ai.NewRoundFrame(at.Radius,"Squircle",{
-Size=UDim2.new(1,0,1,0),
+Size=UDim2.new(1,0,0,0),
 BackgroundTransparency=1,
-
+AutomaticSize="Y",
 Visible=false,
 ThemeTag={
 ImageColor3="White",

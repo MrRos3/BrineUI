@@ -601,8 +601,12 @@ function DropdownMenu.New(Config, Dropdown, Element, Type)
 	RecalculateListSize()
 	RecalculateCanvasSize()
 
+	-- Set at once, unlike Dropdown.Opened, which waits for the opening animation.
+	local MenuShown = false
+
 	function DropdownModule:Open()
 		if not Dropdown.Locked then
+			MenuShown = true
 			Dropdown.UIElements.Menu.Visible = true
 			Dropdown.UIElements.MenuCanvas.Visible = true
 			Dropdown.UIElements.MenuCanvas.Active = true
@@ -625,6 +629,7 @@ function DropdownMenu.New(Config, Dropdown, Element, Type)
 	end
 
 	function DropdownModule:Close()
+		MenuShown = false
 		Dropdown.Opened = false
 
 		Tween(Dropdown.UIElements.Menu, 0.25, {
@@ -632,15 +637,20 @@ function DropdownMenu.New(Config, Dropdown, Element, Type)
 			ImageTransparency = 1,
 		}, Enum.EasingStyle.Quart, Enum.EasingDirection.Out):Play()
 
+		-- A quick reopen must not be hidden by this close finishing late.
 		task.spawn(function()
 			task.wait(0.1)
-			Dropdown.UIElements.Menu.Visible = false
+			if not MenuShown then
+				Dropdown.UIElements.Menu.Visible = false
+			end
 		end)
 
 		task.spawn(function()
 			task.wait(0.25)
-			Dropdown.UIElements.MenuCanvas.Visible = false
-			Dropdown.UIElements.MenuCanvas.Active = false
+			if not MenuShown then
+				Dropdown.UIElements.MenuCanvas.Visible = false
+				Dropdown.UIElements.MenuCanvas.Active = false
+			end
 		end)
 	end
 
@@ -649,8 +659,13 @@ function DropdownMenu.New(Config, Dropdown, Element, Type)
 			Dropdown.UIElements.Dropdown and Dropdown.UIElements.Dropdown.MouseButton1Click
 			or Dropdown.DropdownFrame.UIElements.Main.MouseButton1Click
 		),
+		-- Clicking the field again closes the menu.
 		function()
-			DropdownModule:Open()
+			if MenuShown then
+				DropdownModule:Close()
+			else
+				DropdownModule:Open()
+			end
 		end
 	)
 

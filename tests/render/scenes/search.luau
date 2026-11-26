@@ -9,9 +9,14 @@ run(1)
 for _, c in Window.UIElements.SideBarContainer:GetChildren() do
 	if c.ClassName == "TextButton" then click(c) end
 end
+run(0.5)
+-- Before anything is typed the popup is just the search row, not a big empty box.
+local popup
 for _, c in Window.UIElements.Main:GetChildren() do
-	local box = c.ClassName == "Frame" and c.Name == "Frame" and find(c, "TextBox")
-	if box then box.Text = "session" end
+	if c.ClassName == "Frame" and c.Name == "Frame" and find(c, "TextBox") then popup = c end
 end
+assert(popup and popup.Visible and popup.AbsoluteSize.Y > 30 and popup.AbsoluteSize.Y < 70, "empty search is one row, got " .. (popup and popup.AbsoluteSize.Y or -1))
+find(popup, "TextBox").Text = "session"
 run(1)
+assert(popup.AbsoluteSize.Y > 90, "results make it grow")
 emit()
