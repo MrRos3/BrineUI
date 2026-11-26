@@ -101,6 +101,17 @@ local ProtectGui = protectgui or (syn and syn.protect_gui) or function() end
 -- where supplied; the normal Roblox client uses its own PlayerGui.
 local GUIParent = gethui and gethui() or LocalPlayer:WaitForChild("PlayerGui")
 
+-- Draw above every other ScreenGui, including the Roblox menu when the
+-- executor parents us into CoreGui (gethui). Layers inside Brine keep their
+-- order: window, notifications, dropdowns, tooltips.
+local TOP_ORDER = 2147483647
+BrineUI.DisplayOrders = {
+	Window = TOP_ORDER - 3,
+	Notifications = TOP_ORDER - 2,
+	Dropdowns = TOP_ORDER - 1,
+	Tooltips = TOP_ORDER,
+}
+
 local UIScaleObj = New("UIScale", {
 	Scale = BrineUI.UIScale,
 })
@@ -112,7 +123,7 @@ BrineUI.ScreenGui = New("ScreenGui", {
 	Parent = GUIParent,
 	IgnoreGuiInset = true,
 	ScreenInsets = "None",
-	DisplayOrder = -99999,
+	DisplayOrder = BrineUI.DisplayOrders.Window,
 }, {
 
 	New("Folder", {
@@ -139,18 +150,21 @@ BrineUI.NotificationGui = New("ScreenGui", {
 	Name = "BrineUI/Notifications",
 	Parent = GUIParent,
 	IgnoreGuiInset = true,
+	DisplayOrder = BrineUI.DisplayOrders.Notifications,
 })
 BrineUI.DropdownGui = New("ScreenGui", {
 	Name = "BrineUI/Dropdowns",
 	Parent = GUIParent,
 	IgnoreGuiInset = true,
 	ScreenInsets = "None",
+	DisplayOrder = BrineUI.DisplayOrders.Dropdowns,
 })
 BrineUI.TooltipGui = New("ScreenGui", {
 	Name = "BrineUI/Tooltips",
 	Parent = GUIParent,
 	IgnoreGuiInset = true,
 	ScreenInsets = "None",
+	DisplayOrder = BrineUI.DisplayOrders.Tooltips,
 })
 ProtectGui(BrineUI.ScreenGui)
 ProtectGui(BrineUI.NotificationGui)

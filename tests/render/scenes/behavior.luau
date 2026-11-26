@@ -170,3 +170,11 @@ Window:Dialog({ Title = "Dialog", Content = "Text", Buttons = { { Title = "OK" }
 run(1)
 print("PASS behavior")
 emit()
+
+-- Brine draws above every other ScreenGui (Roblox menu included), keeping its own layers in order.
+do
+	local w, n, d, t = Brine.ScreenGui.DisplayOrder, Brine.NotificationGui.DisplayOrder, Brine.DropdownGui.DisplayOrder, Brine.TooltipGui.DisplayOrder
+	assert(w >= 2147483600, "window draws above the Roblox menu, got " .. tostring(w))
+	assert(w < n and n < d and d < t, "window < notifications < dropdowns < tooltips")
+	assert(t == 2147483647, "tooltips use the top display order")
+end

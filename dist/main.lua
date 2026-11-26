@@ -1,5 +1,5 @@
 --[==[
-BrineUI 0.3.13 by Salty (MrRos3)
+BrineUI 0.3.14 by Salty (MrRos3)
 MIT License
 
 Copyright (c) 2026 Salty (MrRos3)
@@ -27035,7 +27035,7 @@ New=a.load'q'.New
 
 }end function a.s()
 
-return[==[{"name":"brine-ui","version":"0.3.13","main":"./dist/main.lua","repository":"https://github.com/MrRos3/BrineUI","author":"Salty (MrRos3)","description":"BrineUI is a Roblox UI library with liquid glass themes","license":"MIT","scripts":{"dev":"node scripts/build.mjs","build":"node scripts/build.mjs","live":"python3 -m http.server 8642","watch":"chokidar . -i 'node_modules' -i 'dist' -i 'build' -c 'npm run dev --'","live-build":"concurrently \"npm run live\" \"npm run watch --\"","audit":"node scripts/audit.mjs","test":"node scripts/test.mjs","contrast":"node scripts/contrast.mjs","render":"node scripts/render.mjs","check":"npm run build && npm run audit && npm test && npm run contrast && npm run render"},"keywords":["ui-library","ui-design","roblox","luau"],"devDependencies":{"chokidar-cli":"^3.0.0","concurrently":"^9.2.0"},"private":true}]==]end function a.t()
+return[==[{"name":"brine-ui","version":"0.3.14","main":"./dist/main.lua","repository":"https://github.com/MrRos3/BrineUI","author":"Salty (MrRos3)","description":"BrineUI is a Roblox UI library with liquid glass themes","license":"MIT","scripts":{"dev":"node scripts/build.mjs","build":"node scripts/build.mjs","live":"python3 -m http.server 8642","watch":"chokidar . -i 'node_modules' -i 'dist' -i 'build' -c 'npm run dev --'","live-build":"concurrently \"npm run live\" \"npm run watch --\"","audit":"node scripts/audit.mjs","test":"node scripts/test.mjs","contrast":"node scripts/contrast.mjs","render":"node scripts/render.mjs","check":"npm run build && npm run audit && npm test && npm run contrast && npm run render"},"keywords":["ui-library","ui-design","roblox","luau"],"devDependencies":{"chokidar-cli":"^3.0.0","concurrently":"^9.2.0"},"private":true}]==]end function a.t()
 
 local aa={}
 
@@ -40421,18 +40421,29 @@ local ax=protectgui or(syn and syn.protect_gui)or function()end
 
 local ay=gethui and gethui()or ar:WaitForChild"PlayerGui"
 
-local az=av("UIScale",{
+
+
+
+local az=2147483647
+aa.DisplayOrders={
+Window=az-3,
+Notifications=az-2,
+Dropdowns=az-1,
+Tooltips=az,
+}
+
+local aA=av("UIScale",{
 Scale=aa.UIScale,
 })
 
-aa.UIScaleObj=az
+aa.UIScaleObj=aA
 
 aa.ScreenGui=av("ScreenGui",{
 Name="BrineUI",
 Parent=ay,
 IgnoreGuiInset=true,
 ScreenInsets="None",
-DisplayOrder=-99999,
+DisplayOrder=aa.DisplayOrders.Window,
 },{
 
 av("Folder",{
@@ -40459,18 +40470,21 @@ aa.NotificationGui=av("ScreenGui",{
 Name="BrineUI/Notifications",
 Parent=ay,
 IgnoreGuiInset=true,
+DisplayOrder=aa.DisplayOrders.Notifications,
 })
 aa.DropdownGui=av("ScreenGui",{
 Name="BrineUI/Dropdowns",
 Parent=ay,
 IgnoreGuiInset=true,
 ScreenInsets="None",
+DisplayOrder=aa.DisplayOrders.Dropdowns,
 })
 aa.TooltipGui=av("ScreenGui",{
 Name="BrineUI/Tooltips",
 Parent=ay,
 IgnoreGuiInset=true,
 ScreenInsets="None",
+DisplayOrder=aa.DisplayOrders.Tooltips,
 })
 ax(aa.ScreenGui)
 ax(aa.NotificationGui)
@@ -40479,90 +40493,90 @@ ax(aa.TooltipGui)
 
 au.Init(aa)
 
-function aa.SetParent(aA,aB)
+function aa.SetParent(aB,aC)
 if aa.ScreenGui then
-aa.ScreenGui.Parent=aB
+aa.ScreenGui.Parent=aC
 end
 if aa.NotificationGui then
-aa.NotificationGui.Parent=aB
+aa.NotificationGui.Parent=aC
 end
 if aa.DropdownGui then
-aa.DropdownGui.Parent=aB
+aa.DropdownGui.Parent=aC
 end
 if aa.TooltipGui then
-aa.TooltipGui.Parent=aB
+aa.TooltipGui.Parent=aC
 end
 end
 math.clamp(aa.TransparencyValue,0,1)
 
-local aA=aa.NotificationModule.Init(aa.NotificationGui)
+local aB=aa.NotificationModule.Init(aa.NotificationGui)
 
-function aa.Notify(aB,aC)
-aC.Holder=aA.Frame
-aC.Window=aa.Window
+function aa.Notify(aC,aD)
+aD.Holder=aB.Frame
+aD.Window=aa.Window
 
-return aa.NotificationModule.New(aC)
+return aa.NotificationModule.New(aD)
 end
 
-function aa.SetNotificationLower(aB,aC)
-aA.SetLower(aC)
+function aa.SetNotificationLower(aC,aD)
+aB.SetLower(aD)
 end
 
-function aa.SetFont(aB,aC)
-au.UpdateFont(aC)
+function aa.SetFont(aC,aD)
+au.UpdateFont(aD)
 end
 
-function aa.OnThemeChange(aB,aC)
-aa.OnThemeChangeFunction=aC
+function aa.OnThemeChange(aC,aD)
+aa.OnThemeChangeFunction=aD
 end
 
-function aa.AddTheme(aB,aC)
-aa.Themes[aC.Name]=aC
-return aC
+function aa.AddTheme(aC,aD)
+aa.Themes[aD.Name]=aD
+return aD
 end
 
-function aa.SetTheme(aB,aC)
-if aa.Themes[aC]then
-aa.Theme=aa.Themes[aC]
-au.SetTheme(aa.Themes[aC])
+function aa.SetTheme(aC,aD)
+if aa.Themes[aD]then
+aa.Theme=aa.Themes[aD]
+au.SetTheme(aa.Themes[aD])
 
 if aa.OnThemeChangeFunction then
-aa.OnThemeChangeFunction(aC)
+aa.OnThemeChangeFunction(aD)
 end
 
-return aa.Themes[aC]
+return aa.Themes[aD]
 end
 return nil
 end
 
-function aa.GetThemes(aB)
+function aa.GetThemes(aC)
 return aa.Themes
 end
-function aa.GetCurrentTheme(aB)
+function aa.GetCurrentTheme(aC)
 return aa.Theme.Name
 end
-function aa.GetTransparency(aB)
+function aa.GetTransparency(aC)
 return aa.Transparent or false
 end
-function aa.GetWindowSize(aB)
+function aa.GetWindowSize(aC)
 return aa.Window.UIElements.Main.Size
 end
-function aa.Localization(aB,aC)
-return aa.LocalizationModule:New(aC,au)
+function aa.Localization(aC,aD)
+return aa.LocalizationModule:New(aD,au)
 end
 
-function aa.SetLanguage(aB,aC)
+function aa.SetLanguage(aC,aD)
 if au.Localization then
-return au.SetLanguage(aC)
+return au.SetLanguage(aD)
 end
 return false
 end
 
-function aa.ToggleAcrylic(aB,aC)
+function aa.ToggleAcrylic(aC,aD)
 if aa.Window and aa.Window.AcrylicPaint and aa.Window.AcrylicPaint.Model then
-aa.Window.Acrylic=aC
-aa.Window.AcrylicPaint.Model.Transparency=aC and 0.98 or 1
-if aC then
+aa.Window.Acrylic=aD
+aa.Window.AcrylicPaint.Model.Transparency=aD and 0.98 or 1
+if aD then
 aw.Enable()
 else
 aw.Disable()
@@ -40570,131 +40584,131 @@ end
 end
 end
 
-function aa.Gradient(aB,aC,aD)
-local aE={}
+function aa.Gradient(aC,aD,aE)
 local aF={}
+local aG={}
 
-for aG,aH in next,aC do
-local aI=tonumber(aG)
-if aI then
-aI=math.clamp(aI/100,0,1)
+for aH,aI in next,aD do
+local aJ=tonumber(aH)
+if aJ then
+aJ=math.clamp(aJ/100,0,1)
 
-local aJ=aH.Color
-if typeof(aJ)=="string"and string.sub(aJ,1,1)=="#"then
-aJ=Color3.fromHex(aJ)
+local aK=aI.Color
+if typeof(aK)=="string"and string.sub(aK,1,1)=="#"then
+aK=Color3.fromHex(aK)
 end
 
-local aK=aH.Transparency or 0
+local aL=aI.Transparency or 0
 
-table.insert(aE,ColorSequenceKeypoint.new(aI,aJ))
-table.insert(aF,NumberSequenceKeypoint.new(aI,aK))
+table.insert(aF,ColorSequenceKeypoint.new(aJ,aK))
+table.insert(aG,NumberSequenceKeypoint.new(aJ,aL))
 end
 end
 
-table.sort(aE,function(aG,aH)
-return aG.Time<aH.Time
+table.sort(aF,function(aH,aI)
+return aH.Time<aI.Time
 end)
-table.sort(aF,function(aG,aH)
-return aG.Time<aH.Time
+table.sort(aG,function(aH,aI)
+return aH.Time<aI.Time
 end)
 
-if#aE<2 then
-table.insert(aE,ColorSequenceKeypoint.new(1,aE[1].Value))
-table.insert(aF,NumberSequenceKeypoint.new(1,aF[1].Value))
+if#aF<2 then
+table.insert(aF,ColorSequenceKeypoint.new(1,aF[1].Value))
+table.insert(aG,NumberSequenceKeypoint.new(1,aG[1].Value))
 end
 
-local aG={
-Color=ColorSequence.new(aE),
-Transparency=NumberSequence.new(aF),
+local aH={
+Color=ColorSequence.new(aF),
+Transparency=NumberSequence.new(aG),
 }
 
-if aD then
-for aH,aI in pairs(aD)do
-aG[aH]=aI
+if aE then
+for aI,aJ in pairs(aE)do
+aH[aI]=aJ
 end
 end
 
-return aG
+return aH
 end
 
-function aa.Popup(aB,aC)
-aC.BrineUI=aa
-return a.load'C'.new(aC,aa.ScreenGui.Popups)
+function aa.Popup(aC,aD)
+aD.BrineUI=aa
+return a.load'C'.new(aD,aa.ScreenGui.Popups)
 end
 
 aa.Themes=a.load'F'(aa,au)
 
-local aB="Liquid"
+local aC="Liquid"
 
 au.Themes=aa.Themes
 
-aa:SetTheme(aB)
+aa:SetTheme(aC)
 aa:SetLanguage(au.Language)
 
-function aa.CreateWindow(aC,aD)
-local aE=a.load'aq'
+function aa.CreateWindow(aD,aE)
+local aF=a.load'aq'
 
-if aD.Folder and not an:IsStudio()and writefile then
+if aE.Folder and not an:IsStudio()and writefile then
 if not isfolder"BrineUI"then
 makefolder"BrineUI"
 end
-if not isfolder(aD.Folder)then
-makefolder(aD.Folder)
+if not isfolder(aE.Folder)then
+makefolder(aE.Folder)
 end
 end
 
-aD.BrineUI=aa
-aD.Window=aa.Window
-aD.Parent=aa.ScreenGui.Window
+aE.BrineUI=aa
+aE.Window=aa.Window
+aE.Parent=aa.ScreenGui.Window
 
 if aa.Window then
 warn"You cannot create more than one window"
 return
 end
 
-local aF=true
+local aG=true
 
-local aG=aa.Themes[aD.Theme]or aa.Themes[aB]
+local aH=aa.Themes[aE.Theme]or aa.Themes[aC]
 
 
-au.SetTheme(aG)
+au.SetTheme(aH)
 
-if aD.KeySystem then
-local aH=gethwid or function()
+if aE.KeySystem then
+local aI=gethwid or function()
 return ar.UserId
 end
-local aI=aH()
-aF=false
+local aJ=aI()
+aG=false
 
 local function loadKeysystem()
-at.new(aD,aI,function(aJ)
-aF=aJ
+at.new(aE,aJ,function(aK)
+aG=aK
 end)
 end
 
-local aJ=(aD.Folder or"Temp").."/"..aI..".key"
+local aK=(aE.Folder or"Temp").."/"..aJ..".key"
 
-if aD.KeySystem.KeyValidator then
-if aD.KeySystem.SaveKey and isfile(aJ)then
-local aK=readfile(aJ)
-local aL=aD.KeySystem.KeyValidator(aK)
+if aE.KeySystem.KeyValidator then
+if aE.KeySystem.SaveKey and isfile(aK)then
+local aL=readfile(aK)
+local aM=aE.KeySystem.KeyValidator(aL)
 
-if aL then
-aF=true
+if aM then
+aG=true
 else
 loadKeysystem()
 end
 else
 loadKeysystem()
 end
-elseif not aD.KeySystem.API then
-if aD.KeySystem.SaveKey and isfile(aJ)then
-local aK=readfile(aJ)
-local aL=(type(aD.KeySystem.Key)=="table")and table.find(aD.KeySystem.Key,aK)
-or tostring(aD.KeySystem.Key)==tostring(aK)
+elseif not aE.KeySystem.API then
+if aE.KeySystem.SaveKey and isfile(aK)then
+local aL=readfile(aK)
+local aM=(type(aE.KeySystem.Key)=="table")and table.find(aE.KeySystem.Key,aL)
+or tostring(aE.KeySystem.Key)==tostring(aL)
 
-if aL then
-aF=true
+if aM then
+aG=true
 else
 loadKeysystem()
 end
@@ -40702,29 +40716,29 @@ else
 loadKeysystem()
 end
 else
-if isfile(aJ)then
-local aK=readfile(aJ)
-local aL=false
+if isfile(aK)then
+local aL=readfile(aK)
+local aM=false
 
-for aM,aN in next,aD.KeySystem.API do
-local aO=aa.Services[aN.Type]
-if aO then
-local aP={}
-for aQ,aR in next,aO.Args do
-table.insert(aP,aN[aR])
+for aN,aO in next,aE.KeySystem.API do
+local aP=aa.Services[aO.Type]
+if aP then
+local aQ={}
+for aR,aS in next,aP.Args do
+table.insert(aQ,aO[aS])
 end
 
-local aQ=aO.New(table.unpack(aP))
-local aR=aQ.Verify(aK)
-if aR then
-aL=true
+local aR=aP.New(table.unpack(aQ))
+local aS=aR.Verify(aL)
+if aS then
+aM=true
 break
 end
 end
 end
 
-aF=aL
-if not aL then
+aG=aM
+if not aM then
 loadKeysystem()
 end
 else
@@ -40734,15 +40748,15 @@ end
 
 repeat
 task.wait()
-until aF
+until aG
 end
 
-local aH=aE(aD)
+local aI=aF(aE)
 
-aa.Transparent=aD.Transparent
-aa.Window=aH
+aa.Transparent=aE.Transparent
+aa.Window=aI
 
-if aD.Acrylic~=false then
+if aE.Acrylic~=false then
 aw.init()
 end
 
@@ -40758,7 +40772,7 @@ end
 
 
 
-return aH
+return aI
 end
 
 return aa
