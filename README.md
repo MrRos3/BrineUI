@@ -10,7 +10,7 @@ This loads the library. Use the full example below to create your own window.
 
 ## Quick demo
 
-Run this one line to open a ready-to-use window.
+Run this one line to open the full example: every element, grouped into tabs.
 
 ```lua
 loadstring(game:HttpGet("https://raw.githubusercontent.com/MrRos3/BrineUI/main/dist/demo.lua"))()

@@ -172,7 +172,17 @@ return function(Config)
 
 	local WindowGlass = Glass.Pane(Window.UICorner, { Visible = false, ZIndex = 2 })
 
+	-- Held directly: some executors rename or move GUI children, so a lookup by name can miss.
+	local ResizeIcon = New("ImageLabel", {
+		Size = UDim2.new(0, 48 * 2, 0, 48 * 2),
+		BackgroundTransparency = 1,
+		Image = "rbxassetid://120997033468887",
+		Position = UDim2.new(0.5, -16, 0.5, -16),
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		ImageTransparency = 1, -- .8; .35
+	})
 	local ResizeHandle = New("Frame", {
+		Name = "ResizeHandle",
 		Size = UDim2.new(0, 32, 0, 32),
 		Position = UDim2.new(1, 0, 1, 0),
 		AnchorPoint = Vector2.new(0.5, 0.5),
@@ -180,14 +190,7 @@ return function(Config)
 		ZIndex = 99,
 		Active = true,
 	}, {
-		New("ImageLabel", {
-			Size = UDim2.new(0, 48 * 2, 0, 48 * 2),
-			BackgroundTransparency = 1,
-			Image = "rbxassetid://120997033468887",
-			Position = UDim2.new(0.5, -16, 0.5, -16),
-			AnchorPoint = Vector2.new(0.5, 0.5),
-			ImageTransparency = 1, -- .8; .35
-		}),
+		ResizeIcon,
 	})
 	local FullScreenIconData = Creator.Icon("expand")
 	local FullScreenIcon = Creator.NewRoundFrame(Window.UICorner, "Squircle", {
@@ -1497,7 +1500,7 @@ return function(Config)
 
 			if Window.Resizable then
 				Tween(
-					ResizeHandle.ImageLabel,
+					ResizeIcon,
 					0.45,
 					{ ImageTransparency = 0.8 },
 					Enum.EasingStyle.Exponential,
@@ -1584,7 +1587,7 @@ return function(Config)
 			Enum.EasingDirection.InOut
 		):Play()
 		Tween(
-			ResizeHandle.ImageLabel,
+			ResizeIcon,
 			0.3,
 			{ ImageTransparency = 1 },
 			Enum.EasingStyle.Exponential,
@@ -1725,9 +1728,10 @@ return function(Config)
 		Window.CurrentConfig = ConfigModule
 	end
 
-	do
+	-- Fit the window to the screen once. Right after a game starts the camera can still report
+	-- a 1x1 viewport, which would shrink everything to the minimum, so wait for a real size.
+	local function AutoFit(ViewportSize)
 		local Margin = 40
-		local ViewportSize = CurrentCamera.ViewportSize
 		local WindowSize = Vector2.new(Window.Size.X.Offset, Window.Size.Y.Offset)
 
 		if not Window.IsFullscreen and Window.AutoScale then
@@ -1751,6 +1755,21 @@ return function(Config)
 				Window:SetUIScale(FinalScale)
 			end
 		end
+	end
+	local MIN_VIEWPORT = 200
+	if CurrentCamera.ViewportSize.X >= MIN_VIEWPORT and CurrentCamera.ViewportSize.Y >= MIN_VIEWPORT then
+		AutoFit(CurrentCamera.ViewportSize)
+	else
+		local Waiting
+		Waiting = CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(function()
+			local ViewportSize = CurrentCamera.ViewportSize
+			if ViewportSize.X >= MIN_VIEWPORT and ViewportSize.Y >= MIN_VIEWPORT then
+				Waiting:Disconnect()
+				if not Window.Destroyed then
+					AutoFit(ViewportSize)
+				end
+			end
+		end)
 	end
 
 	if Window.OpenButtonMain then
@@ -2120,7 +2139,7 @@ return function(Config)
 			initialInputPosition = input.Position
 			--Tween(FullScreenIcon, 0.12, {ImageTransparency = .65}):Play()
 			--Tween(FullScreenIcon.ImageLabel, 0.12, {ImageTransparency = 0}):Play()
-			Tween(ResizeHandle.ImageLabel, 0.1, { ImageTransparency = 0.35 }):Play()
+			Tween(ResizeIcon, 0.1, { ImageTransparency = 0.35 }):Play()
 
 			Creator.AddSignal(input.Changed, function()
 				if input.UserInputState == Enum.UserInputState.End then
@@ -2134,7 +2153,7 @@ return function(Config)
 					FullScreenIcon.Active = false
 					--Tween(FullScreenIcon, 0.2, {ImageTransparency = 1}):Play()
 					--Tween(FullScreenIcon.ImageLabel, 0.17, {ImageTransparency = 1}):Play()
-					Tween(ResizeHandle.ImageLabel, 0.17, { ImageTransparency = 0.8 }):Play()
+					Tween(ResizeIcon, 0.17, { ImageTransparency = 0.8 }):Play()
 				end
 			end)
 		end
@@ -2186,7 +2205,7 @@ return function(Config)
 			return
 		end
 		if not isResizing then
-			Tween(ResizeHandle.ImageLabel, 0.1, { ImageTransparency = 0.35 }):Play()
+			Tween(ResizeIcon, 0.1, { ImageTransparency = 0.35 }):Play()
 		end
 	end)
 	Creator.AddSignal(ResizeHandle.MouseLeave, function()
@@ -2194,7 +2213,7 @@ return function(Config)
 			return
 		end
 		if not isResizing then
-			Tween(ResizeHandle.ImageLabel, 0.17, { ImageTransparency = 0.8 }):Play()
+			Tween(ResizeIcon, 0.17, { ImageTransparency = 0.8 }):Play()
 		end
 	end)
 

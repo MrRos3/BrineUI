@@ -61,32 +61,40 @@ for _, pack in ipairs({ "lucide", "solar", "craft", "geist", "sfsymbols", "gravi
 end
 assert(Brine.Creator.Icon("layers")[1] ~= "")
 
--- Check the actual demo's UI wiring at the public API boundary.
-local tabs, notice, theme = {}, nil, nil
-local window = { Tab = function(_, config)
-	local tab = { Config = config }
-	function tab:Select() self.Selected = true end
-	function tab:Slider(options) self.SliderOptions = options end
-	function tab:Button(options) self.ButtonOptions = options end
-	function tab:Dropdown(options) self.DropdownOptions = options end
-	table.insert(tabs, tab)
-	return tab
-end }
-local demoLibrary = {
+-- Run the full example against a recorder: every call is logged and returns another recorder.
+local calls, windows = {}, 0
+local function recorder(): any
+	return setmetatable({}, {
+		__index = function(_, key)
+			return function(_, ...)
+				calls[key] = (calls[key] or 0) + 1
+				return recorder()
+			end
+		end,
+		__concat = function() return "" end,
+	})
+end
+local demoLibrary = setmetatable({
+	Version = Brine.Version,
 	CreateWindow = function(_, options)
-		assert(options.Title == "Brine" and options.ToggleKey == Enum.KeyCode.RightShift)
-		assert(not options.Folder and not options.KeySystem, "Demo requires optional host functions")
-		return window
+		windows += 1
+		assert(type(options.Title) == "string" and options.Title:find("Brine"), "the example names the window")
+		assert(options.OpenButton and options.OpenButton.Enabled ~= false, "the example keeps the minimize badge")
+		return recorder()
 	end,
-	Notify = function(_, options) notice = options.Title end,
-	SetTheme = function(_, selected) theme = selected end,
-}
-local result = (function(...)
+}, { __index = function(_, key) return recorder()[key] end })
+-- The example reaches for more of the Roblox API than startup does.
+local Enum = setmetatable({}, { __index = function(_, kind)
+	return setmetatable({}, { __index = function(_, item) return kind .. "." .. item end })
+end })
+local Font = { new = function() return {} end }
+local task = { spawn = function() end, wait = function() end, delay = function() end }
+;(function(...)
 -- INSERT EXAMPLE
 end)(demoLibrary)
-assert(result == window and #tabs == 2 and tabs[1].Selected)
-assert(tabs[1].SliderOptions.Value.Default == 70)
-tabs[1].ButtonOptions.Callback()
-tabs[2].DropdownOptions.Callback("Light")
-assert(notice == "BrineUI is ready" and theme == "Light")
-print("PASS: standalone startup loads all six pinned packs without external requests; demo creates tabs and wires UI callbacks.")
+assert(windows == 1, "one window")
+assert((calls.Tab or 0) >= 8, "the example has every tab")
+for _, element in { "Section", "Paragraph", "Button", "Toggle", "Slider", "Input", "Dropdown", "Colorpicker", "Keybind", "Code", "Group", "Divider", "ProgressBar", "HStack" } do
+	assert((calls[element] or 0) > 0, "the example shows " .. element)
+end
+print("PASS: standalone startup loads all six pinned packs without external requests; the full example builds every element.")
