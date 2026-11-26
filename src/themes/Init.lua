@@ -2,13 +2,19 @@ local Brine = require("./Brine")
 local Liquid = require("./Liquid")
 
 return function(BrineUI, Creator)
-	local Salty = table.clone(Brine)
-	Salty.Name = "Salty" -- Original preview theme name.
+	-- "Brine" and "Salty" are the library's own names, so scripts that ask for them get the
+	-- main liquid glass theme. The old solid palette stays available as "Brine Classic".
+	local function Alias(Name)
+		local Theme = table.clone(Liquid.Dark)
+		Theme.Name = Name
+		return Theme
+	end
 	return {
 		Liquid = Liquid.Dark,
 		["Liquid Light"] = Liquid.Light,
-		Brine = Brine,
-		Salty = Salty,
+		Brine = Alias("Brine"),
+		Salty = Alias("Salty"),
+		["Brine Classic"] = Brine,
 		Dark = {
 			Name = "Dark",
 

@@ -61,6 +61,17 @@ local back = Window.UIElements.Main.Background
 assert(math.abs(back.ImageTransparency - 0.22) < 0.01, "Liquid window is translucent")
 Brine:SetTheme("Dark")
 assert(back.ImageTransparency == 0, "opaque themes stay opaque")
+-- The library's own names are the main glass theme; the old solid palette is Brine Classic.
+for _, name in { "Brine", "Salty" } do
+	Brine:SetTheme(name)
+	run(0.5)
+	assert(math.abs(back.ImageTransparency - 0.22) < 0.01, name .. " is the liquid glass theme")
+end
+Brine:SetTheme("Brine Classic")
+run(0.5)
+assert(back.ImageTransparency == 0, "Brine Classic keeps the solid palette")
+Brine:SetTheme("Dark")
+run(0.5)
 Window:ToggleTransparency(true)
 assert(back.ImageTransparency > 0.1, "Transparent still works on them")
 Window:ToggleTransparency(false)

@@ -1,5 +1,5 @@
 --[==[
-BrineUI 0.3.12 by Salty (MrRos3)
+BrineUI 0.3.13 by Salty (MrRos3)
 MIT License
 
 Copyright (c) 2026 Salty (MrRos3)
@@ -27035,7 +27035,7 @@ New=a.load'q'.New
 
 }end function a.s()
 
-return[==[{"name":"brine-ui","version":"0.3.12","main":"./dist/main.lua","repository":"https://github.com/MrRos3/BrineUI","author":"Salty (MrRos3)","description":"BrineUI is a Roblox UI library with liquid glass themes","license":"MIT","scripts":{"dev":"node scripts/build.mjs","build":"node scripts/build.mjs","live":"python3 -m http.server 8642","watch":"chokidar . -i 'node_modules' -i 'dist' -i 'build' -c 'npm run dev --'","live-build":"concurrently \"npm run live\" \"npm run watch --\"","audit":"node scripts/audit.mjs","test":"node scripts/test.mjs","contrast":"node scripts/contrast.mjs","render":"node scripts/render.mjs","check":"npm run build && npm run audit && npm test && npm run contrast && npm run render"},"keywords":["ui-library","ui-design","roblox","luau"],"devDependencies":{"chokidar-cli":"^3.0.0","concurrently":"^9.2.0"},"private":true}]==]end function a.t()
+return[==[{"name":"brine-ui","version":"0.3.13","main":"./dist/main.lua","repository":"https://github.com/MrRos3/BrineUI","author":"Salty (MrRos3)","description":"BrineUI is a Roblox UI library with liquid glass themes","license":"MIT","scripts":{"dev":"node scripts/build.mjs","build":"node scripts/build.mjs","live":"python3 -m http.server 8642","watch":"chokidar . -i 'node_modules' -i 'dist' -i 'build' -c 'npm run dev --'","live-build":"concurrently \"npm run live\" \"npm run watch --\"","audit":"node scripts/audit.mjs","test":"node scripts/test.mjs","contrast":"node scripts/contrast.mjs","render":"node scripts/render.mjs","check":"npm run build && npm run audit && npm test && npm run contrast && npm run render"},"keywords":["ui-library","ui-design","roblox","luau"],"devDependencies":{"chokidar-cli":"^3.0.0","concurrently":"^9.2.0"},"private":true}]==]end function a.t()
 
 local aa={}
 
@@ -28617,7 +28617,7 @@ end
 return aa end function a.D()
 
 return{
-Name="Brine",
+Name="Brine Classic",
 Accent=Color3.fromHex"151515",
 Background=Color3.fromHex"0D0D0D",
 Dialog=Color3.fromHex"1C1C1C",
@@ -28774,13 +28774,19 @@ local aa=a.load'D'
 local ab=a.load'E'
 
 return function(ac,ad)
-local ae=table.clone(aa)
-ae.Name="Salty"
+
+
+local function Alias(ae)
+local af=table.clone(ab.Dark)
+af.Name=ae
+return af
+end
 return{
 Liquid=ab.Dark,
 ["Liquid Light"]=ab.Light,
-Brine=aa,
-Salty=ae,
+Brine=Alias"Brine",
+Salty=Alias"Salty",
+["Brine Classic"]=aa,
 Dark={
 Name="Dark",
 

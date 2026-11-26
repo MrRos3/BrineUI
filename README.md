@@ -83,7 +83,7 @@ Settings:Slider({
 
 Settings:Dropdown({
     Title = "Theme",
-    Values = { "Liquid", "Liquid Light", "Brine", "Dark", "Light" },
+    Values = { "Liquid", "Liquid Light", "Brine Classic", "Dark", "Light" },
     Value = "Liquid",
     Callback = function(theme)
         Library:SetTheme(theme)

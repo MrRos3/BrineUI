@@ -1,6 +1,6 @@
--- Original Brine palette by Salty.
+-- The original Brine palette by Salty, from before the liquid glass look.
 return {
-	Name = "Brine",
+	Name = "Brine Classic",
 	Accent = Color3.fromHex("151515"),
 	Background = Color3.fromHex("0D0D0D"),
 	Dialog = Color3.fromHex("1C1C1C"),
