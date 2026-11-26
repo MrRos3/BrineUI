@@ -346,6 +346,8 @@ game = { GetService = function(_, n)
 	services[n] = services[n] or Instance.new(n)
 	return services[n]
 end }
+-- Roblox's top bar takes 58px that a ScreenGui with IgnoreGuiInset still covers.
+services.GuiService = { GetGuiInset = function() return Vector2.new(0, 58), Vector2.new(0, 0) end }
 
 -- Layout -------------------------------------------------------------------------
 local function charW(face, size, text)

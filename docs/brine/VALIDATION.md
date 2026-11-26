@@ -1,6 +1,6 @@
 # Validation
 
-## Roblox desktop in BrineUI 0.3.8
+## Roblox desktop in BrineUI 0.3.9
 
 - Tested startup, row heights, controls, sections, code block, menu, notification, dialog, close and reopen, and the Liquid, Liquid Light, and Dark themes.
 - Tested traffic lights, a custom top bar button, tooltips, menu selection, slider drag, toggle, color picker, search, window drag and resize, and fullscreen.

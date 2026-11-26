@@ -128,6 +128,7 @@ Window:Close()
 run(1)
 local badge = Window.OpenButtonMain.Button
 assert(badge.Parent.Visible and badge.AbsoluteSize.X == badge.AbsoluteSize.Y, "square badge after minimize")
+assert(badge.AbsolutePosition.Y >= 58 + 10, "badge sits below Roblox's top bar, not under it")
 local function tap(dx)
 	local hit = badge.TextButton
 	local input = { UserInputType = Enum.UserInputType.MouseButton1, Position = Vector3.new(100, 100, 0) }

@@ -13,11 +13,23 @@ local cloneref = (cloneref or clonereference or function(instance)
 end)
 
 local UserInputService = cloneref(game:GetService("UserInputService"))
+local GuiService = cloneref(game:GetService("GuiService"))
 
 local SIZE = 52
 local DefaultCorner = UDim.new(0, 16)
 -- Movement under this many pixels still counts as a click.
 local DRAG_THRESHOLD = 4
+-- Gap between Roblox's top bar and the badge.
+local TOP_GAP = 14
+
+-- The window's ScreenGui ignores the top bar inset, so the default spot starts below it.
+local function DefaultPosition()
+	local Ok, Inset = pcall(function()
+		return GuiService:GetGuiInset()
+	end)
+	local Top = Ok and Inset and Inset.Y or 0
+	return UDim2.new(0.5, 0, 0, Top + TOP_GAP + SIZE / 2)
+end
 
 function OpenButton.New(Window)
 	local OpenButtonMain = {
@@ -27,6 +39,8 @@ function OpenButton.New(Window)
 
 	local Icon
 	local CanDrag = true
+	-- Once dragged or placed by a script, the badge stays where it was put.
+	local Placed = false
 	local BaseScale = 1
 
 	local Title = New("TextLabel", {
@@ -47,7 +61,7 @@ function OpenButton.New(Window)
 
 	local Container = New("Frame", {
 		Size = UDim2.fromOffset(SIZE, SIZE),
-		Position = UDim2.new(0.5, 0, 0, 14 + SIZE / 2),
+		Position = DefaultPosition(),
 		AnchorPoint = Vector2.new(0.5, 0.5),
 		Parent = Window.Parent,
 		BackgroundTransparency = 1,
@@ -144,7 +158,7 @@ function OpenButton.New(Window)
 		end
 		local Delta = Input.Position - Start
 		if Dragged or Delta.Magnitude > DRAG_THRESHOLD then
-			Dragged = true
+			Dragged, Placed = true, true
 			Container.Position = UDim2.new(
 				StartPosition.X.Scale,
 				StartPosition.X.Offset + Delta.X,
@@ -179,6 +193,9 @@ function OpenButton.New(Window)
 
 	function OpenButtonMain:Visible(v)
 		if v and not Container.Visible then
+			if not Placed then
+				Container.Position = DefaultPosition()
+			end
 			UIScale.Scale = BaseScale * 0.6
 			Container.Visible = true
 			Tween(UIScale, 0.32, { Scale = BaseScale }, Enum.EasingStyle.Back, Enum.EasingDirection.Out):Play()
@@ -219,6 +236,7 @@ function OpenButton.New(Window)
 		end
 
 		if OpenButtonModule.Position then
+			Placed = true
 			Container.Position = OpenButtonModule.Position
 		end
 

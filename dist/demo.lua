@@ -1,5 +1,5 @@
 --[==[
-BrineUI 0.3.8 by Salty (MrRos3)
+BrineUI 0.3.9 by Salty (MrRos3)
 MIT License
 
 Copyright (c) 2026 Salty (MrRos3)
@@ -26954,7 +26954,7 @@ New=a.load'q'.New
 
 }end function a.s()
 
-return[==[{"name":"brine-ui","version":"0.3.8","main":"./dist/main.lua","repository":"https://github.com/MrRos3/BrineUI","author":"Salty (MrRos3)","description":"BrineUI is a Roblox UI library with liquid glass themes","license":"MIT","scripts":{"dev":"node scripts/build.mjs","build":"node scripts/build.mjs","live":"python3 -m http.server 8642","watch":"chokidar . -i 'node_modules' -i 'dist' -i 'build' -c 'npm run dev --'","live-build":"concurrently \"npm run live\" \"npm run watch --\"","audit":"node scripts/audit.mjs","test":"node scripts/test.mjs","contrast":"node scripts/contrast.mjs","render":"node scripts/render.mjs","check":"npm run build && npm run audit && npm test && npm run contrast && npm run render"},"keywords":["ui-library","ui-design","roblox","luau"],"devDependencies":{"chokidar-cli":"^3.0.0","concurrently":"^9.2.0"},"private":true}]==]end function a.t()
+return[==[{"name":"brine-ui","version":"0.3.9","main":"./dist/main.lua","repository":"https://github.com/MrRos3/BrineUI","author":"Salty (MrRos3)","description":"BrineUI is a Roblox UI library with liquid glass themes","license":"MIT","scripts":{"dev":"node scripts/build.mjs","build":"node scripts/build.mjs","live":"python3 -m http.server 8642","watch":"chokidar . -i 'node_modules' -i 'dist' -i 'build' -c 'npm run dev --'","live-build":"concurrently \"npm run live\" \"npm run watch --\"","audit":"node scripts/audit.mjs","test":"node scripts/test.mjs","contrast":"node scripts/contrast.mjs","render":"node scripts/render.mjs","check":"npm run build && npm run audit && npm test && npm run contrast && npm run render"},"keywords":["ui-library","ui-design","roblox","luau"],"devDependencies":{"chokidar-cli":"^3.0.0","concurrently":"^9.2.0"},"private":true}]==]end function a.t()
 
 local aa={}
 
@@ -29972,24 +29972,38 @@ return ag
 end)
 
 local ah=ag(game:GetService"UserInputService")
+local ai=ag(game:GetService"GuiService")
 
-local ai=52
-local aj=UDim.new(0,16)
+local aj=52
+local ak=UDim.new(0,16)
 
-local ak=4
+local al=4
 
-function aa.New(al)
-local am={
+local am=14
+
+
+local function DefaultPosition()
+local an,ao=pcall(function()
+return ai:GetGuiInset()
+end)
+local ap=an and ao and ao.Y or 0
+return UDim2.new(0.5,0,0,ap+am+aj/2)
+end
+
+function aa.New(an)
+local ao={
 Button=nil,
 OnClick=nil,
 }
 
-local an
-local ao=true
-local ap=1
+local ap
+local aq=true
 
-local aq=ac("TextLabel",{
-Text=al.Title,
+local ar=false
+local as=1
+
+local at=ac("TextLabel",{
+Text=an.Title,
 TextSize=16,
 FontFace=Font.new(ab.Font,Enum.FontWeight.SemiBold),
 BackgroundTransparency=1,
@@ -30001,50 +30015,50 @@ TextColor3="WindowTopbarTitle",
 },
 })
 
-local ar=ae.Stroke()
-ar.Name="UIStroke"
+local au=ae.Stroke()
+au.Name="UIStroke"
 
-local as=ac("Frame",{
-Size=UDim2.fromOffset(ai,ai),
-Position=UDim2.new(0.5,0,0,14+ai/2),
+local av=ac("Frame",{
+Size=UDim2.fromOffset(aj,aj),
+Position=DefaultPosition(),
 AnchorPoint=Vector2.new(0.5,0.5),
-Parent=al.Parent,
+Parent=an.Parent,
 BackgroundTransparency=1,
 Visible=false,
 })
 
-local at=ac("UIScale",{
+local aw=ac("UIScale",{
 Scale=1,
 })
 
 
-local au=ac("Frame",{
-Size=UDim2.fromOffset(ai,ai),
+local ax=ac("Frame",{
+Size=UDim2.fromOffset(aj,aj),
 AutomaticSize="X",
 AnchorPoint=Vector2.new(0.5,0.5),
 Position=UDim2.new(0.5,0,0.5,0),
-Parent=as,
+Parent=av,
 BackgroundTransparency=0.15,
 ZIndex=99,
 ThemeTag={
 BackgroundColor3="WindowBackground",
 },
 },{
-at,
+aw,
 ac("UICorner",{
-CornerRadius=aj,
+CornerRadius=ak,
 }),
-ar,
-ae.Pane(aj.Offset,{ZIndex=99}),
+au,
+ae.Pane(ak.Offset,{ZIndex=99}),
 ac("TextButton",{
 Text="",
 AutomaticSize="X",
-Size=UDim2.new(0,ai,1,0),
+Size=UDim2.new(0,aj,1,0),
 BackgroundTransparency=1,
 ZIndex=100,
 },{
 ac("UICorner",{
-CornerRadius=UDim.new(0,aj.Offset-4),
+CornerRadius=UDim.new(0,ak.Offset-4),
 }),
 ac("UIListLayout",{
 Padding=UDim.new(0,10),
@@ -30053,163 +30067,167 @@ VerticalAlignment="Center",
 HorizontalAlignment="Center",
 SortOrder="LayoutOrder",
 }),
-aq,
+at,
 ac("UIPadding",{
 PaddingLeft=UDim.new(0,15),
 PaddingRight=UDim.new(0,15),
 }),
 }),
 })
-local av=au.TextButton
+local ay=ax.TextButton
 
-am.Button=au
+ao.Button=ax
 
-function am.SetIcon(aw,ax)
-if an then
-an:Destroy()
+function ao.SetIcon(az,aA)
+if ap then
+ap:Destroy()
 end
-if ax then
-an=ab.Image(ax,al.Title,0,al.Folder,"OpenButton",true,al.IconThemed,"WindowTopbarIcon")
-an.Size=UDim2.fromOffset(24,24)
+if aA then
+ap=ab.Image(aA,an.Title,0,an.Folder,"OpenButton",true,an.IconThemed,"WindowTopbarIcon")
+ap.Size=UDim2.fromOffset(24,24)
 else
-an=af(nil)
+ap=af(nil)
 end
-an.LayoutOrder=1
-an.Parent=av
+ap.LayoutOrder=1
+ap.Parent=ay
 end
-am:SetIcon(al.Icon)
+ao:SetIcon(an.Icon)
 
 
-local aw,ax,ay,az
-ab.AddSignal(av.InputBegan,function(aA)
+local az,aA,aB,b
+ab.AddSignal(ay.InputBegan,function(d)
 if
-aA.UserInputType~=Enum.UserInputType.MouseButton1
-and aA.UserInputType~=Enum.UserInputType.Touch
+d.UserInputType~=Enum.UserInputType.MouseButton1
+and d.UserInputType~=Enum.UserInputType.Touch
 then
 return
 end
-aw,az=aA,false
-ax,ay=aA.Position,as.Position
-ad(at,0.12,{Scale=ap*0.92},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
+az,b=d,false
+aA,aB=d.Position,av.Position
+ad(aw,0.12,{Scale=as*0.92},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
 end)
-ab.AddSignal(ah.InputChanged,function(aA)
-if not aw or not ao then
+ab.AddSignal(ah.InputChanged,function(d)
+if not az or not aq then
 return
 end
-local aB=aA.UserInputType==Enum.UserInputType.MouseMovement
-or(aA.UserInputType==Enum.UserInputType.Touch and aA==aw)
-if not aB then
+local f=d.UserInputType==Enum.UserInputType.MouseMovement
+or(d.UserInputType==Enum.UserInputType.Touch and d==az)
+if not f then
 return
 end
-local b=aA.Position-ax
-if az or b.Magnitude>ak then
-az=true
-as.Position=UDim2.new(
-ay.X.Scale,
-ay.X.Offset+b.X,
-ay.Y.Scale,
-ay.Y.Offset+b.Y
+local g=d.Position-aA
+if b or g.Magnitude>al then
+b,ar=true,true
+av.Position=UDim2.new(
+aB.X.Scale,
+aB.X.Offset+g.X,
+aB.Y.Scale,
+aB.Y.Offset+g.Y
 )
 end
 end)
-ab.AddSignal(ah.InputEnded,function(aA)
-if not aw then
+ab.AddSignal(ah.InputEnded,function(d)
+if not az then
 return
 end
-if aA~=aw and aA.UserInputType~=aw.UserInputType then
+if d~=az and d.UserInputType~=az.UserInputType then
 return
 end
-aw=nil
-ad(at,0.18,{Scale=ap},Enum.EasingStyle.Back,Enum.EasingDirection.Out):Play()
-if not az and am.OnClick then
-am.OnClick()
+az=nil
+ad(aw,0.18,{Scale=as},Enum.EasingStyle.Back,Enum.EasingDirection.Out):Play()
+if not b and ao.OnClick then
+ao.OnClick()
 end
 end)
-ab.AddSignal(av.MouseEnter,function()
-if not aw then
-ad(at,0.15,{Scale=ap*1.06},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
+ab.AddSignal(ay.MouseEnter,function()
+if not az then
+ad(aw,0.15,{Scale=as*1.06},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
 end
 end)
-ab.AddSignal(av.MouseLeave,function()
-if not aw then
-ad(at,0.15,{Scale=ap},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
+ab.AddSignal(ay.MouseLeave,function()
+if not az then
+ad(aw,0.15,{Scale=as},Enum.EasingStyle.Quint,Enum.EasingDirection.Out):Play()
 end
 end)
 
-function am.Visible(aA,aB)
-if aB and not as.Visible then
-at.Scale=ap*0.6
-as.Visible=true
-ad(at,0.32,{Scale=ap},Enum.EasingStyle.Back,Enum.EasingDirection.Out):Play()
+function ao.Visible(d,f)
+if f and not av.Visible then
+if not ar then
+av.Position=DefaultPosition()
+end
+aw.Scale=as*0.6
+av.Visible=true
+ad(aw,0.32,{Scale=as},Enum.EasingStyle.Back,Enum.EasingDirection.Out):Play()
 else
-as.Visible=aB
+av.Visible=f
 end
 end
 
-function am.SetScale(aA,aB)
-ap=aB
-as.Size=UDim2.fromOffset(ai*aB,ai*aB)
-at.Scale=aB
+function ao.SetScale(d,f)
+as=f
+av.Size=UDim2.fromOffset(aj*f,aj*f)
+aw.Scale=f
 end
 
-function am.Edit(aA,aB)
-local b={
-Title=aB.Title,
-Icon=aB.Icon,
-Enabled=aB.Enabled,
-Position=aB.Position,
-OnlyIcon=aB.OnlyIcon,
-Draggable=aB.Draggable,
-OnlyMobile=aB.OnlyMobile,
-CornerRadius=aB.CornerRadius or aj,
-StrokeThickness=aB.StrokeThickness or(aB.Color and 2 or 1),
-Scale=aB.Scale or 1,
-Color=aB.Color,
+function ao.Edit(d,f)
+local g={
+Title=f.Title,
+Icon=f.Icon,
+Enabled=f.Enabled,
+Position=f.Position,
+OnlyIcon=f.OnlyIcon,
+Draggable=f.Draggable,
+OnlyMobile=f.OnlyMobile,
+CornerRadius=f.CornerRadius or ak,
+StrokeThickness=f.StrokeThickness or(f.Color and 2 or 1),
+Scale=f.Scale or 1,
+Color=f.Color,
 }
 
-if b.Enabled==false then
-al.IsOpenButtonEnabled=false
+if g.Enabled==false then
+an.IsOpenButtonEnabled=false
 end
 
-al.OpenButtonMobileOnly=b.OnlyMobile==true
+an.OpenButtonMobileOnly=g.OnlyMobile==true
 
-if b.Draggable==false then
-ao=false
+if g.Draggable==false then
+aq=false
 end
 
-if b.Position then
-as.Position=b.Position
-end
-
-
-if b.Title then
-aq.Text=b.Title
-ab:ChangeTranslationKey(aq,b.Title)
-end
-aq.Visible=b.OnlyIcon==false
-or(b.OnlyIcon==nil and b.Title~=nil)
-
-if b.Icon then
-am:SetIcon(b.Icon)
+if g.Position then
+ar=true
+av.Position=g.Position
 end
 
 
-if b.Color then
-ab.AddThemeObject(au.UIStroke,{Color="White",Transparency="BackgroundTransparency"})
-au.UIStroke.Transparency=0
-au.UIStroke.UIGradient.Transparency=NumberSequence.new(0)
-au.UIStroke.UIGradient.Color=b.Color
+if g.Title then
+at.Text=g.Title
+ab:ChangeTranslationKey(at,g.Title)
+end
+at.Visible=g.OnlyIcon==false
+or(g.OnlyIcon==nil and g.Title~=nil)
+
+if g.Icon then
+ao:SetIcon(g.Icon)
 end
 
-au.UICorner.CornerRadius=b.CornerRadius
-av.UICorner.CornerRadius=
-UDim.new(b.CornerRadius.Scale,b.CornerRadius.Offset-4)
-au.UIStroke.Thickness=b.StrokeThickness
 
-am:SetScale(b.Scale)
+if g.Color then
+ab.AddThemeObject(ax.UIStroke,{Color="White",Transparency="BackgroundTransparency"})
+ax.UIStroke.Transparency=0
+ax.UIStroke.UIGradient.Transparency=NumberSequence.new(0)
+ax.UIStroke.UIGradient.Color=g.Color
 end
 
-return am
+ax.UICorner.CornerRadius=g.CornerRadius
+ay.UICorner.CornerRadius=
+UDim.new(g.CornerRadius.Scale,g.CornerRadius.Offset-4)
+ax.UIStroke.Thickness=g.StrokeThickness
+
+ao:SetScale(g.Scale)
+end
+
+return ao
 end
 
 return aa end function a.N()
