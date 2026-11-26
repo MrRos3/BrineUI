@@ -114,10 +114,15 @@ end
 local dot = order[2].Object.AbsolutePosition
 UIS_MouseMove(dot.X + 11, dot.Y + 18)
 run(0.2)
-for _, b in order do assert(find(b.Object, "Glyph").Visible, "pointing at one shows every symbol") end
+assert(find(order[2].Object, "Glyph").Visible, "the pointed light shows its symbol")
+assert(not find(order[1].Object, "Glyph").Visible and not find(order[3].Object, "Glyph").Visible, "the other lights stay plain")
+local red = order[3].Object.AbsolutePosition
+UIS_MouseMove(red.X + 11, red.Y + 18)
+run(0.2)
+assert(find(order[3].Object, "Glyph").Visible and not find(order[2].Object, "Glyph").Visible, "the symbol follows the pointer")
 UIS_MouseMove(dot.X + 300, dot.Y + 300)
 run(0.2)
-assert(not find(order[1].Object, "Glyph").Visible, "symbols hide again")
+for _, b in order do assert(not find(b.Object, "Glyph").Visible, "symbols hide again") end
 click(topbar.Actions:GetChildren()[4]:GetChildren()[1])
 assert(custom == 1, "custom topbar button")
 click(order[1].Object.Hitbox)

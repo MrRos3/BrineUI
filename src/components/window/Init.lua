@@ -974,28 +974,35 @@ return function(Config)
 	local LIGHT_SIZE, LIGHT_PITCH = 14, 22
 	local WINDOW_BUTTONS = { Close = true, Minimize = true, Fullscreen = true }
 
-	-- The symbols belong to the group: pointing at one light shows all of them. Touch has no
-	-- pointer, so they stay visible there. The pointer itself is followed: MouseLeave does not
-	-- fire when a click moves the window out from under it.
-	local LightIcons, PointsAtLights = {}, false
+	-- Each light shows its symbol only while the pointer is on that light. Touch has no
+	-- pointer, so every symbol stays visible there. The pointer itself is followed:
+	-- MouseLeave does not fire when a click moves the window out from under it.
+	-- Each entry is { Icon = symbol frame, Hit = the light's slot }.
+	local LightIcons, PointedLight = {}, nil
 	local function ShowLightIcons()
-		local Shown = PointsAtLights or Window.IsPC == false
-		for _, LightIcon in next, LightIcons do
-			LightIcon.Visible = Shown
+		for _, Light in next, LightIcons do
+			Light.Icon.Visible = Window.IsPC == false or Light == PointedLight
 		end
 	end
 	local function UpdateLightPointer()
-		local Points = not Window.Closed
-			and UserInputService.MouseEnabled ~= false
-			and ScreenSpace.Contains(Window.UIElements.Main.Main.Topbar.Right, ScreenSpace.Mouse())
-		if Points ~= PointsAtLights then
-			PointsAtLights = Points
+		local Pointed = nil
+		if not Window.Closed and UserInputService.MouseEnabled ~= false then
+			local Mouse = ScreenSpace.Mouse()
+			for _, Light in next, LightIcons do
+				if Light.Hit and ScreenSpace.Contains(Light.Hit, Mouse) then
+					Pointed = Light
+					break
+				end
+			end
+		end
+		if Pointed ~= PointedLight then
+			PointedLight = Pointed
 			ShowLightIcons()
 		end
 	end
 	-- Leaving the Roblox window sends no more movement, so hide them then too.
 	Creator.AddSignal(UserInputService.WindowFocusReleased, function()
-		PointsAtLights = false
+		PointedLight = nil
 		ShowLightIcons()
 	end)
 
@@ -1037,7 +1044,6 @@ return function(Config)
 				IconFrame.ImageLabel.ImageTransparency = 0.45
 				IconFrame.Visible = false
 			end
-			table.insert(LightIcons, IconFrame)
 		end
 
 		local Button
@@ -1099,6 +1105,9 @@ return function(Config)
 			Button,
 			IsLight and Trigger or nil,
 		})
+		if IsLight then
+			table.insert(LightIcons, { Icon = IconFrame, Hit = Trigger })
+		end
 
 		-- shhh
 

@@ -1,5 +1,5 @@
 --[==[
-BrineUI 0.3.9 by Salty (MrRos3)
+BrineUI 0.3.10 by Salty (MrRos3)
 MIT License
 
 Copyright (c) 2026 Salty (MrRos3)
@@ -26954,7 +26954,7 @@ New=a.load'q'.New
 
 }end function a.s()
 
-return[==[{"name":"brine-ui","version":"0.3.9","main":"./dist/main.lua","repository":"https://github.com/MrRos3/BrineUI","author":"Salty (MrRos3)","description":"BrineUI is a Roblox UI library with liquid glass themes","license":"MIT","scripts":{"dev":"node scripts/build.mjs","build":"node scripts/build.mjs","live":"python3 -m http.server 8642","watch":"chokidar . -i 'node_modules' -i 'dist' -i 'build' -c 'npm run dev --'","live-build":"concurrently \"npm run live\" \"npm run watch --\"","audit":"node scripts/audit.mjs","test":"node scripts/test.mjs","contrast":"node scripts/contrast.mjs","render":"node scripts/render.mjs","check":"npm run build && npm run audit && npm test && npm run contrast && npm run render"},"keywords":["ui-library","ui-design","roblox","luau"],"devDependencies":{"chokidar-cli":"^3.0.0","concurrently":"^9.2.0"},"private":true}]==]end function a.t()
+return[==[{"name":"brine-ui","version":"0.3.10","main":"./dist/main.lua","repository":"https://github.com/MrRos3/BrineUI","author":"Salty (MrRos3)","description":"BrineUI is a Roblox UI library with liquid glass themes","license":"MIT","scripts":{"dev":"node scripts/build.mjs","build":"node scripts/build.mjs","live":"python3 -m http.server 8642","watch":"chokidar . -i 'node_modules' -i 'dist' -i 'build' -c 'npm run dev --'","live-build":"concurrently \"npm run live\" \"npm run watch --\"","audit":"node scripts/audit.mjs","test":"node scripts/test.mjs","contrast":"node scripts/contrast.mjs","render":"node scripts/render.mjs","check":"npm run build && npm run audit && npm test && npm run contrast && npm run render"},"keywords":["ui-library","ui-design","roblox","luau"],"devDependencies":{"chokidar-cli":"^3.0.0","concurrently":"^9.2.0"},"private":true}]==]end function a.t()
 
 local aa={}
 
@@ -38812,17 +38812,24 @@ local Q={Close=true,Minimize=true,Fullscreen=true}
 
 
 
-local R,S={},false
+
+local R,S={}
 local function ShowLightIcons()
-local T=S or d.IsPC==false
-for U,V in next,R do
-V.Visible=T
+for T,U in next,R do
+U.Icon.Visible=d.IsPC==false or U==S
 end
 end
 local function UpdateLightPointer()
-local T=not d.Closed
-and ag.MouseEnabled~=false
-and ar.Contains(d.UIElements.Main.Main.Topbar.Right,ar.Mouse())
+local T
+if not d.Closed and ag.MouseEnabled~=false then
+local U=ar.Mouse()
+for V,W in next,R do
+if W.Hit and ar.Contains(W.Hit,U)then
+T=W
+break
+end
+end
+end
 if T~=S then
 S=T
 ShowLightIcons()
@@ -38830,7 +38837,7 @@ end
 end
 
 as.AddSignal(ag.WindowFocusReleased,function()
-S=false
+S=nil
 ShowLightIcons()
 end)
 
@@ -38872,7 +38879,6 @@ aG.ImageLabel.ImageColor3=Color3.new(0,0,0)
 aG.ImageLabel.ImageTransparency=0.45
 aG.Visible=false
 end
-table.insert(R,aG)
 end
 
 local aH
@@ -38934,6 +38940,9 @@ LayoutOrder=X or 999,
 aH,
 aE and aI or nil,
 })
+if aE then
+table.insert(R,{Icon=aG,Hit=aI})
+end
 
 
 
